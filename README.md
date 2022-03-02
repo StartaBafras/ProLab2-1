@@ -26,7 +26,7 @@ ProLab 2-1
 - https://pypi.org/project/big-O-calculator/
 - https://pypi.org/project/big-O/
 - https://shunnarski.github.io/BigO.html
-- 
+- https://ieeexplore.ieee.org/document/7947882
 
 ### Genel Sorunlar
 - https://stackoverflow.com/questions/6282198/reading-string-from-input-with-space-character
