@@ -50,3 +50,9 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# Binary files
+clear_assembly
+prolab21
+
+.vscode
