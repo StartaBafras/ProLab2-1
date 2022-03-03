@@ -35,3 +35,7 @@ ProLab 2-1
 - https://www.quora.com/Is-there-any-online-software-available-for-calculating-the-time-and-space-complexity-of-a-Java-program-in-Big-O
 - https://opencoursehub.cs.sfu.ca/bfraser/grav-cms/cmpt433/guides/files/DebuggingGuide.pdf
 - 
+
+### C
+- https://stackoverflow.com/questions/13591374/command-output-redirect-to-file-and-terminal
+- https://stackoverflow.com/questions/6282198/reading-string-from-input-with-space-character
