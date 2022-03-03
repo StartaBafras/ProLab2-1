@@ -32,4 +32,5 @@ ProLab 2-1
 - https://stackoverflow.com/questions/6282198/reading-string-from-input-with-space-character
 - https://stackoverflow.com/questions/9958299/a-tool-for-calculating-the-big-o-time-complexity-of-java-code
 - https://www.quora.com/Is-there-any-online-software-available-for-calculating-the-time-and-space-complexity-of-a-Java-program-in-Big-O
+- https://opencoursehub.cs.sfu.ca/bfraser/grav-cms/cmpt433/guides/files/DebuggingGuide.pdf
 - 
