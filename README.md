@@ -11,7 +11,6 @@ ProLab 2-1
 - https://medium.com/dataseries/how-to-calculate-time-complexity-with-big-o-notation-9afe33aa4c46
 - https://stackoverflow.com/questions/11032015/how-to-find-time-complexity-of-an-algorithm
 - https://stackoverflow.com/questions/3255/big-o-how-do-you-calculate-approximate-it
-- https://sci-hub.wf/10.1109/ICNTE.2017.7947882
 - 
 ### Assembly
 - https://godbolt.org/
