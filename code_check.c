@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include "code_check.h"
 
-void move_and_compile(void)
+int move_and_compile(void)
 {
     FILE *original = fopen("question.txt","r");
     FILE *c_code = fopen("input.c","w");
@@ -27,5 +27,6 @@ void move_and_compile(void)
         fprintf(c_code,"%s",temp);
     }
     fclose(c_code);
-    system("make input");
+    return system("make input");
+
 }

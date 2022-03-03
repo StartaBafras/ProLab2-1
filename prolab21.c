@@ -17,9 +17,16 @@ int toplam(int dizi[], int n)
 
 int main(void)
 {
+    int error = 0;
     int dizi[5] = {1,2,3,4,5};
     int boyut = sizeof(dizi);
     toplam(dizi,boyut);
     
-    move_and_compile();
+    error = move_and_compile();
+
+    if(0 != error)
+    {
+        printf("Kod Hatalı Derlenemedi.");
+        return 1;
+    }
 }

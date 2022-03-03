@@ -6,6 +6,6 @@
  *  Yeni dosyayı "q.c" şeklinde kayıt eder.
  * @param void boş
  */
-void move_and_compile(void);
+int move_and_compile(void);
 
 #endif
