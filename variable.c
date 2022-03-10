@@ -43,7 +43,7 @@ int add_variable_data(variable_s *data, variable_s *variable_p)
  * @param variable Değişkenin ismi
  * @param variable_p Değişen bağlı listesini işaret eden kök işaretçisi.
  * 
- * @return Adres
+ * @return  Değişkenin bağlı listedeki adresi
  */
 variable_s* search_variable(char *variable, variable_s *variable_p)
 {
