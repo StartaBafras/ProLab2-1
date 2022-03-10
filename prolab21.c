@@ -3,7 +3,10 @@
 #include <string.h>
 
 #include "code_check.h"
-
+#include "variable.h"
+#include "loop.h"
+#include "function.h"
+#include "increase.h"
 
 int toplam(int dizi[], int n)
 {
