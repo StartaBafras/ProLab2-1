@@ -48,8 +48,11 @@ int find_increase(char *message,int size)
             return Lineer; // Lineer artış
         }
     }
+
+    return -1;
 }
 
+/*
 int main(void)
 {
     char q[8] = "a = i++";
@@ -63,4 +66,4 @@ int main(void)
         error = find_increase(&q[error],sizeof(q)-error-1);
     }
     
-}
+}*/
