@@ -37,3 +37,33 @@ int add_variable_data(variable_s *data, variable_s *variable_p)
     write_variable_data(data,variable_p);
 
 }
+
+/**
+ * @brief Değişken bağlı listesinde istenen değişkeni isminden bulur ve tutulduğu adresi döndürür.
+ * @param variable Değişkenin ismi
+ * @param variable_p Değişen bağlı listesini işaret eden kök işaretçisi.
+ * 
+ * @return Adres
+ */
+variable_s* search_variable(char *variable, variable_s *variable_p)
+{
+    while(1)
+    {
+        if(strcmp(variable_p->name,variable))
+        {
+            return variable_p;
+        }
+        else
+        {
+            if(variable_p->next != NULL)
+            {
+                variable_p = variable_p->next;
+            }
+            else
+            {
+                return NULL;
+            }
+        }
+    }
+
+}
