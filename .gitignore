@@ -54,5 +54,6 @@ dkms.conf
 # Binary files
 clear_assembly
 prolab21
+input
 
 .vscode
