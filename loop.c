@@ -34,7 +34,7 @@ int add_loop(loop_s *data, loop_s *loops)
 {
     if(loops->id == NULL)
     {
-        data->id = 0;
+        data->id = 1;
         write_loop_data(data,loops);
         return 0;
     }
