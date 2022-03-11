@@ -10,10 +10,12 @@
  */ 
 int write_variable_data(variable_s *data, variable_s *variable_p)
 {
+    variable_p->id = data->id;
     variable_p->kind = data->kind;
     variable_p->line = data->line;
     strcpy(variable_p->name,data->name);
     variable_p->increase_rate = NULL;
+    variable_p->next = NULL;
     
 }
 
@@ -27,13 +29,15 @@ int add_variable_data(variable_s *data, variable_s *variable_p)
 {
     if(variable_p->id == NULL)
     {
-        data->id = 0;
+        data->id = 1;
         write_variable_data(data,variable_p);
         return 0;
     }
 
     for(;variable_p->next != NULL; variable_p = variable_p->next);
     data->id = variable_p->id+1;
+    variable_p->next = malloc(sizeof(variable_p));
+    variable_p = variable_p->next;
     write_variable_data(data,variable_p);
 
 }
