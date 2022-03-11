@@ -11,7 +11,9 @@ ProLab 2-1
 - https://medium.com/dataseries/how-to-calculate-time-complexity-with-big-o-notation-9afe33aa4c46
 - https://stackoverflow.com/questions/11032015/how-to-find-time-complexity-of-an-algorithm
 - https://stackoverflow.com/questions/3255/big-o-how-do-you-calculate-approximate-it
-- 
+- https://www.quora.com/How-do-we-calculate-space-complexity
+- https://www.baeldung.com/cs/space-complexity
+
 ### Assembly
 - https://godbolt.org/
 - https://stackoverflow.com/questions/199966/how-do-you-use-gcc-to-generate-assembly-code-in-intel-syntax
@@ -33,7 +35,7 @@ ProLab 2-1
 - https://stackoverflow.com/questions/9958299/a-tool-for-calculating-the-big-o-time-complexity-of-java-code
 - https://www.quora.com/Is-there-any-online-software-available-for-calculating-the-time-and-space-complexity-of-a-Java-program-in-Big-O
 - https://opencoursehub.cs.sfu.ca/bfraser/grav-cms/cmpt433/guides/files/DebuggingGuide.pdf
-- 
+
 
 ### C
 - https://stackoverflow.com/questions/13591374/command-output-redirect-to-file-and-terminal
