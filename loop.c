@@ -42,6 +42,8 @@ int add_loop(loop_s *data, loop_s *loops)
 
     for(;loops->next != NULL; loops = loops->next);
     data->id = loops->id+1;
+    loops->next = malloc(sizeof(loop_s));
+    loops = loops->next;
     write_loop_data(data,loops);
 
     return 0;
