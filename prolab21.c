@@ -48,8 +48,14 @@ int main(void)
     find_variables(read_txt, v_root);
     find_for(read_txt, l_root);
     find_while(read_txt, l_root);
-    loop_and_variable(v_root, l_root);
+    connect_loop_and_variable(v_root, l_root);
     find_size(v_root);
+    for (int i = 0; i < 15; i++)
+    {
+    find_increase_case1(read_txt[i],30);
+      
+    }
+    
 
     int error = 0;
     int dizi[5] = {1, 2, 3, 4, 5};
