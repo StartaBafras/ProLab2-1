@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "loop.h"
 #include "variable.h"
 
@@ -18,7 +19,7 @@ int write_loop_data(loop_s *data, loop_s *loops)
     loops->next = NULL;
     loops->start_end_line[0] = data->start_end_line[0];
     loops->start_end_line[1] = data->start_end_line[1];
-  // printf("//%d //%d // %d //%d //%s \n", loops->id, loops->kind, loops->start_end_line[0], loops->start_end_line[1],loops->condition);
+    // printf("//%d //%d // %d //%d //%s \n", loops->id, loops->kind, loops->start_end_line[0], loops->start_end_line[1],loops->condition);
 
     return 0;
 }
@@ -33,7 +34,7 @@ int add_loop(loop_s *data, loop_s *loops)
 {
     if (loops->start_end_line[0] == NULL)
     {
-        data->id = 1;
+        data->id = 0;
         write_loop_data(data, loops);
         return 0;
     }
@@ -60,14 +61,14 @@ int find_for(char text[][Size], loop_s *l_root)
 {
 
     char name_loop[] = "for";
-    char raise_loop[c_Size_s];        // artışı tutar
-    char n_for_temp[c_Size_l];        // ismi geçiçi tutar
-    char l_raise_temp[c_Size_l];      // artışı geçiçi tutar
-    char loop_condition[c_Size_l];    // koşulu tutar
-    int line_loop_start = NULL; // başlama atırını tutar
-    int line_loop_end = NULL;   // bitme satırını tutar
+    char raise_loop[c_Size_s];     // artışı tutar
+    char n_for_temp[c_Size_l];     // ismi geçiçi tutar
+    char l_raise_temp[c_Size_l];   // artışı geçiçi tutar
+    char loop_condition[c_Size_l]; // koşulu tutar
+    int line_loop_start = NULL;    // başlama atırını tutar
+    int line_loop_end = NULL;      // bitme satırını tutar
 
-    char *p_loop;                          // türün yerini belli eden
+    char *p_loop;                  // türün yerini belli eden
     for (int i = 0; i < Size; i++) // satırları gezer
     {
         p_loop = text[i];
@@ -87,7 +88,7 @@ int find_for(char text[][Size], loop_s *l_root)
             for (int j = 0; j < strlen(l_raise_temp); j++) // satırın içini gezer
 
             {
-                if (l_raise_temp[j] == ';')
+                if ((l_raise_temp[j] == ';') || (l_raise_temp[j] == '<') || (l_raise_temp[j] == '>') || (l_raise_temp[j] == '=')|| (l_raise_temp[j] == '!'))
                 {
                     break;
                 }
@@ -115,7 +116,7 @@ int find_for(char text[][Size], loop_s *l_root)
             // fonk çağır
             line_loop_end = 0;
             line_loop_end = find_line_end(line_loop_start, text);
-            //printf("--%s ---%s --%d  --%s--%d \n", name_loop, raise_loop, line_loop_start, loop_condition, line_loop_end);
+            // printf("--%s ---%s --%d  --%s--%d \n", name_loop, raise_loop, line_loop_start, loop_condition, line_loop_end);
             loop_s data;
             data.kind = v_FOR;
             memset(data.condition, NULL, c_Size_s);
@@ -163,12 +164,12 @@ int find_line_end(int line_start, char text[][Size])
  */
 int find_while(char text[][Size], loop_s *l_root)
 {
-    char name_loop[] = "while";
+    char name_loop[c_Size_s] = "while";
     char *p_loop;
     char *token;
-    char loop_condition[c_Size_l];    // koşulu tutar
-    int line_loop_start = NULL; // başlama atırını tutar
-    int line_loop_end = NULL;   // bitme satırını tutar
+    char loop_condition[c_Size_l]; // koşulu tutar
+    int line_loop_start = NULL;    // başlama atırını tutar
+    int line_loop_end = NULL;      // bitme satırını tutar
     for (int i = 0; i < Size; i++)
     {
         p_loop = text[i];
@@ -179,16 +180,19 @@ int find_while(char text[][Size], loop_s *l_root)
             line_loop_end = find_line_end(line_loop_start, text);
             p_loop = strstr(p_loop, name_loop);
             p_loop += 6;
-            token = strtok(p_loop, ")");
+            p_loop = strtok(p_loop, "<");
+            p_loop = strtok(p_loop, ">");
+            p_loop = strtok(p_loop, "=");
+            p_loop = strtok(p_loop, "!");
             memset(loop_condition, NULL, c_Size_l);
-            strcat(loop_condition, token);
+            strcat(loop_condition, p_loop);
             if (line_loop_end == line_loop_start)
             {
                 line_loop_start = find_do(text, line_loop_end);
                 strcat(name_loop, " do");
             }
 
-          //  printf("--%s  --%d  --%s--%d \n", name_loop, line_loop_start, loop_condition, line_loop_end);
+            //  printf("--%s  --%d  --%s--%d \n", name_loop, line_loop_start, loop_condition, line_loop_end);
             loop_s data;
             if (NULL != strstr(name_loop, "do"))
             {
@@ -198,7 +202,8 @@ int find_while(char text[][Size], loop_s *l_root)
             {
                 data.kind = V_WHILE;
             }
-
+            memset(data.condition, NULL, c_Size_s);
+            strcat(data.condition, loop_condition);
             data.start_end_line[0] = line_loop_start;
             data.start_end_line[1] = line_loop_end;
             data.id = 0;
@@ -244,15 +249,17 @@ int find_do(char text[][Size], int end_while_line)
  */
 void connect_loop_and_variable(variable_s *v_root, loop_s *l_root)
 {
-
+    int result = 0; // fonkisyonun geri dönüş parametresini tutar
     if (l_root != NULL)
     {
-        l_root->id_var = research_variable_connect_loop_same_line(v_root, l_root->start_end_line[0]);
-        if (-1 == l_root->id_var)
+        result = research_variable_connect_loop_same_line(v_root, l_root->start_end_line[0]);
+
+        if (-1 == result)
         {
-            l_root->id_var = research_variable_connect_loop_different_line(v_root, l_root);
+            result = research_variable_connect_loop_different_line(v_root, l_root);
         }
-        //printf("%d\n", l_root->id_var);
+        search_variable(l_root->condition, result, v_root);
+        // printf("%d\n", l_root->id_var);
     }
     if (l_root->next != NULL)
     {
@@ -263,11 +270,11 @@ void connect_loop_and_variable(variable_s *v_root, loop_s *l_root)
  *@brief variable struct'ının içinde gezinir amacı döngüye ait değişkeni bulmak
  *döngünün başlangıç yerini alır, çünkü genelde değişken orda tanımlanır,
  * eğer tanımlanmamışsa and_variable_case_2 çağırılır
- * 
+ *
  * @param v_root variable struct'ın root'unu alır
- * 
+ *
  *@param loop_start_line döngünün başlangıç yerini alır.
- * 
+ *
  *@return (int) -1: Bulunamadı
  */
 int research_variable_connect_loop_same_line(variable_s *v_root, int loop_start_line)
@@ -276,7 +283,7 @@ int research_variable_connect_loop_same_line(variable_s *v_root, int loop_start_
     {
         if (loop_start_line == v_root->line)
         {
-            return v_root->id;
+            return v_root->line;
         }
     }
 
@@ -290,18 +297,18 @@ int research_variable_connect_loop_same_line(variable_s *v_root, int loop_start_
  * @brief Variable struct'ının içinde gezinir amacı döngüye ait değişkeni bulmak
  *  for dongüsünün içinde tanımlanmamış ise çalışır .
  * bu durumda for döngüsünden önce tanımlanmıştır ve for tanımlamadan önceki yerlerde arar.
- * 
+ *
  * @param v_root variable struct'ın root'unu alır
  *@param l_root  loop struct'ın root'unu alır
- * 
- * 
-*/
+ *
+ *
+ */
 int research_variable_connect_loop_different_line(variable_s *v_root, loop_s *l_root)
 {
 
     if ((0 == strcmp(l_root->condition, v_root->name)) && (l_root->start_end_line[0] >= v_root->line))
     {
-        return v_root->id;
+        return v_root->line;
     }
     if (v_root->next != NULL)
     {
