@@ -52,9 +52,6 @@ int add_loop(loop_s *data, loop_s *loops)
  * @brief  dosyanın içindeki stringi alır.
  * for döngüsünü  bulur  ve struct'a ekler.
  * @param text string dizisi
- *
- *@retun 0:
- *
  */
 int find_for(char text[][Size], loop_s *l_root)
 {

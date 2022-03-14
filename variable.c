@@ -140,16 +140,17 @@ int find_same_line_var(char name_var[50], int var_line, char var_kind[c_Size_s],
  * bağlı listede arar ve adresini gönderir.
  * 
  * @param variable Değişkenin ismi.
+ * @param variable_line Değişkenin bulunduğu satırç
  * @param root Değişkenleri tutan bağlı listenin kök adresi.
  * 
  * @return variable_s türünden adres.
  */
-variable_s* find_variables_by_name(char *variable ,variable_s *root)
+variable_s* find_variables_by_name(char *variable,int varibale_line ,variable_s *root)
 {
     
     while(1)
     {
-        if( 0 == strcmp(variable,root->name))
+        if( 0 == strcmp(variable,root->name) && varibale_line == root->line)
         {
             return root;
         }
