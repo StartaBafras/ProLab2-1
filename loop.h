@@ -16,7 +16,6 @@ typedef struct loop_s
     int start_end_line[2];
     veriable_s_pointer dependent_variable;
     int complexity;
-    int id_var;
     char condition[10];
     struct loop_s *next;
 
