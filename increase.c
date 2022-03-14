@@ -143,14 +143,7 @@ int clear_line(char *message,int size)
         }
     }
 }
-int find_variables_by_name(char *message, int size)
-{
-    int word = 1;
 
-    for(int i=0; i<size; i++) if(message[i] == ' ') word++;
-
-
-}
 
 /**
  * @brief Verilen diziyi boşluklara göre parçalayarak bir işaretçiye kayıt eder.
