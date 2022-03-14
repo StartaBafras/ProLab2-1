@@ -237,36 +237,40 @@ int find_do(char text[][Size], int end_while_line)
 }
 /**
  *@brief döngü struct'ının içinde gezinir amacı döngüye ait değişkeni bulmak
+ *
  *@param v_root variable struct'ın root'unu alır
+ *
  *@param l_root  loop struct'ın root'unu alır
  */
-void loop_and_variable(variable_s *v_root, loop_s *l_root)
+void connect_loop_and_variable(variable_s *v_root, loop_s *l_root)
 {
 
     if (l_root != NULL)
     {
-        l_root->id_var = and_variable(v_root, l_root->start_end_line[0]);
+        l_root->id_var = research_variable_connect_loop_same_line(v_root, l_root->start_end_line[0]);
         if (-1 == l_root->id_var)
         {
-            l_root->id_var = and_variable_case_2(v_root, l_root);
+            l_root->id_var = research_variable_connect_loop_different_line(v_root, l_root);
         }
         //printf("%d\n", l_root->id_var);
     }
     if (l_root->next != NULL)
     {
-        loop_and_variable(v_root, l_root->next);
+        connect_loop_and_variable(v_root, l_root->next);
     }
 }
 /**
  *@brief variable struct'ının içinde gezinir amacı döngüye ait değişkeni bulmak
  *döngünün başlangıç yerini alır, çünkü genelde değişken orda tanımlanır,
  * eğer tanımlanmamışsa and_variable_case_2 çağırılır
+ * 
  * @param v_root variable struct'ın root'unu alır
+ * 
  *@param loop_start_line döngünün başlangıç yerini alır.
  * 
- *
+ *@return (int) -1: Bulunamadı
  */
-int and_variable(variable_s *v_root, int loop_start_line)
+int research_variable_connect_loop_same_line(variable_s *v_root, int loop_start_line)
 {
     if (v_root != NULL)
     {
@@ -278,18 +282,21 @@ int and_variable(variable_s *v_root, int loop_start_line)
 
     if (v_root->next != NULL)
     {
-        return and_variable(v_root->next, loop_start_line);
+        return research_variable_connect_loop_same_line(v_root->next, loop_start_line);
     }
     return -1;
 }
 /**
- * @brief case 2 durumunda çalışır bu durum for döngüsünden önce tanımlanmış ise
+ * @brief Variable struct'ının içinde gezinir amacı döngüye ait değişkeni bulmak
+ *  for dongüsünün içinde tanımlanmamış ise çalışır .
+ * bu durumda for döngüsünden önce tanımlanmıştır ve for tanımlamadan önceki yerlerde arar.
+ * 
  * @param v_root variable struct'ın root'unu alır
  *@param l_root  loop struct'ın root'unu alır
  * 
  * 
 */
-int and_variable_case_2(variable_s *v_root, loop_s *l_root)
+int research_variable_connect_loop_different_line(variable_s *v_root, loop_s *l_root)
 {
 
     if ((0 == strcmp(l_root->condition, v_root->name)) && (l_root->start_end_line[0] >= v_root->line))
@@ -298,6 +305,6 @@ int and_variable_case_2(variable_s *v_root, loop_s *l_root)
     }
     if (v_root->next != NULL)
     {
-        and_variable_case_2(v_root = v_root->next, l_root);
+        research_variable_connect_loop_different_line(v_root = v_root->next, l_root);
     }
 }
