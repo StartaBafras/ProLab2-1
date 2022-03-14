@@ -35,5 +35,7 @@ int find_variables(char text[][Size], variable_s *root); // değişken türünü
 
 void find_size(variable_s *v_root);
 
+variable_s* find_variables_by_name(char *variable ,variable_s *root);
+
 
 #endif

@@ -133,6 +133,36 @@ int find_same_line_var(char name_var[50], int var_line, char var_kind[c_Size_s],
     }
     return 0;
 }
+
+
+/**
+ * @brief Değişkenler bağlı listesine kayıtlı olan bir değişkeni 
+ * bağlı listede arar ve adresini gönderir.
+ * 
+ * @param variable Değişkenin ismi.
+ * @param root Değişkenleri tutan bağlı listenin kök adresi.
+ * 
+ * @return variable_s türünden adres.
+ */
+variable_s* find_variables_by_name(char *variable ,variable_s *root)
+{
+    
+    while(1)
+    {
+        if( 0 == strcmp(variable,root->name))
+        {
+            return root;
+        }
+
+        if(root->next != NULL) root = root->next;
+        else break;
+    }
+
+    return NULL;
+
+}
+
+
 /**
  * @brief  dosyanın içindeki stringi alır.
  * değişken ve fonksiyonları bulur ve struct'a ekler.
