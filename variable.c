@@ -181,7 +181,6 @@ int find_variables(char text[][Size], variable_s *root)
     char *p_kind;                                                                               // türün yerini belli eden p_kind
     char *p_name;                                                                               // ismin yerini belli eder
     char name_temp[Size];                                                                        // isimi geçiçi olarak tutar
-    //char name_temp2[c_Size_l];                                                                        // ismi geçiçi olarak tutuar
     char var_name[c_Size_l];                                                                          // ismi tutar
     char var_kind[c_Size_l];                                                                          // türü tutar
     int var_line = -1;                                                                          // türün satırını tutar
@@ -259,24 +258,6 @@ int find_variables(char text[][Size], variable_s *root)
 
                         memset(var_name, NULL, c_Size_l);
 
-                        /* var_name[strlen(var_name)] = ',';
-                         for (int l = 0; l < strlen(var_name); l++) // bir değişkende türüne birden fazla tanımlama var mı diye bakar
-                         {
-                             if (',' == var_name[l])
-                             {
-                                 memset(name_temp2, NULL, strlen(name_temp2));
-
-                                 strncat(name_temp2, var_name, l);
-                                 printf("%s --%s--%d\n", var_kind, name_temp2, var_line);
-                                 strcat(data.name, name_temp2);
-                                 add_variable_data(&data, root);
-                                 p_name = strchr(var_name, ',');
-                                 memset(var_name, NULL, l);
-                                 strcat(var_name, p_name + 1);
-                                 l = -1;
-                                 memset(data.name, NULL, strlen(data.name));
-                             }
-                         }*/
                     }
                     else
                     {
