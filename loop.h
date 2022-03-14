@@ -46,11 +46,11 @@ int find_while(char text[][Size], loop_s *l_root);
 
 int find_do(char text[][Size], int end_while_line);
 
-void loop_and_variable(variable_s *v_root, loop_s *l_root);
+void connect_loop_and_variable(variable_s *v_root, loop_s *l_root);
 
-int and_variable(variable_s *v_root, int loop_start_line);
+int research_variable_connect_loop_same_line(variable_s *v_root, int loop_start_line);
 
-int and_variable_case_2(variable_s *v_root, loop_s *l_root);
+int research_variable_connect_loop_different_line(variable_s *v_root, loop_s *l_root);
 
 int find_line_end(int line_start, char text[][Size]); // iç içe for bulur
 
