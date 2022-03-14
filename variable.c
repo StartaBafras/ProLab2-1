@@ -43,32 +43,30 @@ int add_variable_data(variable_s *data, variable_s *variable_p)
 }
 
 /**
- * @brief Değişken bağlı listesinde istenen değişkeni isminden bulur ve tutulduğu adresi döndürür.
- * @param variable Değişkenin ismi
- * @param variable_p Değişen bağlı listesini işaret eden kök işaretçisi.
+ * @brief Değişkenler bağlı listesine kayıtlı olan bir değişkeni 
+ * bağlı listede arar ve adresini gönderir.
  * 
- * @return  Değişkenin bağlı listedeki adresi
+ * @param variable Değişkenin ismi.
+ * @param variable_line Değişkenin bulunduğu satırç
+ * @param root Değişkenleri tutan bağlı listenin kök adresi.
+ * 
+ * @return variable_s türünden adres.
  */
-variable_s* search_variable(char *variable, variable_s *variable_p)
+variable_s* search_variable(char *variable,int varibale_line ,variable_s *root)
 {
+    
     while(1)
     {
-        if(strcmp(variable_p->name,variable))
+        if( 0 == strcmp(variable,root->name) && varibale_line == root->line)
         {
-            return variable_p;
+            return root;
         }
-        else
-        {
-            if(variable_p->next != NULL)
-            {
-                variable_p = variable_p->next;
-            }
-            else
-            {
-                return NULL;
-            }
-        }
+
+        if(root->next != NULL) root = root->next;
+        else break;
     }
+
+    return NULL;
 
 }
 
@@ -135,32 +133,7 @@ int find_same_line_var(char name_var[50], int var_line, char var_kind[c_Size_s],
 }
 
 
-/**
- * @brief Değişkenler bağlı listesine kayıtlı olan bir değişkeni 
- * bağlı listede arar ve adresini gönderir.
- * 
- * @param variable Değişkenin ismi.
- * @param root Değişkenleri tutan bağlı listenin kök adresi.
- * 
- * @return variable_s türünden adres.
- */
-variable_s* find_variables_by_name(char *variable ,variable_s *root)
-{
-    
-    while(1)
-    {
-        if( 0 == strcmp(variable,root->name))
-        {
-            return root;
-        }
 
-        if(root->next != NULL) root = root->next;
-        else break;
-    }
-
-    return NULL;
-
-}
 
 
 /**
@@ -181,6 +154,7 @@ int find_variables(char text[][Size], variable_s *root)
     char *p_kind;                                                                               // türün yerini belli eden p_kind
     char *p_name;                                                                               // ismin yerini belli eder
     char name_temp[Size];                                                                        // isimi geçiçi olarak tutar
+    //char name_temp2[c_Size_l];                                                                        // ismi geçiçi olarak tutuar
     char var_name[c_Size_l];                                                                          // ismi tutar
     char var_kind[c_Size_l];                                                                          // türü tutar
     int var_line = -1;                                                                          // türün satırını tutar
@@ -258,6 +232,24 @@ int find_variables(char text[][Size], variable_s *root)
 
                         memset(var_name, NULL, c_Size_l);
 
+                        /* var_name[strlen(var_name)] = ',';
+                         for (int l = 0; l < strlen(var_name); l++) // bir değişkende türüne birden fazla tanımlama var mı diye bakar
+                         {
+                             if (',' == var_name[l])
+                             {
+                                 memset(name_temp2, NULL, strlen(name_temp2));
+
+                                 strncat(name_temp2, var_name, l);
+                                 printf("%s --%s--%d\n", var_kind, name_temp2, var_line);
+                                 strcat(data.name, name_temp2);
+                                 add_variable_data(&data, root);
+                                 p_name = strchr(var_name, ',');
+                                 memset(var_name, NULL, l);
+                                 strcat(var_name, p_name + 1);
+                                 l = -1;
+                                 memset(data.name, NULL, strlen(data.name));
+                             }
+                         }*/
                     }
                     else
                     {
