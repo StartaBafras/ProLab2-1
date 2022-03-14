@@ -29,7 +29,7 @@ int add_variable_data(variable_s *data, variable_s *variable_p)
 {
     if(variable_p->line == NULL)
     {
-        data->id = 1;
+        data->id = 0;
         write_variable_data(data,variable_p);
         return 0;
     }
@@ -59,6 +59,7 @@ variable_s* search_variable(char *variable,int varibale_line ,variable_s *root)
     {
         if( 0 == strcmp(variable,root->name) && varibale_line == root->line)
         {
+            printf("%d\n",root->line);
             return root;
         }
 
@@ -173,7 +174,7 @@ int find_variables(char text[][Size], variable_s *root)
                 p_kind += strlen(variables[j]);                 // türünün sonunu işaret eder
                 memset(name_temp, NULL,Size);     // içini boşaltır
                 strcat(name_temp, p_kind);                      // geçiçi değişkene atar
-
+                int l=0;
                 for (int k = 0; k < strlen(name_temp); k++) // satırın içini gezer
 
                 {
@@ -184,12 +185,13 @@ int find_variables(char text[][Size], variable_s *root)
                     if (('A' <= name_temp[k]) || ('[' == name_temp[k]) || ('_' == name_temp[k]) || ('(' == name_temp[k]) || ('*' == name_temp[k]) || (',' == name_temp[k])) // isme dahil eder
                     {
 
-                        var_name[k] = name_temp[k];
+                        var_name[l] = name_temp[k];
+                        l++;
                     }
-                    else
+                   /* else
                     {
                         var_name[k] = ' ';
-                    }
+                    }*/
                 }
                 for (int k = 0; k < strlen(var_name); k++) // ismin içinde gezer
                 {
