@@ -163,6 +163,9 @@ int find_variables(char text[][Size], variable_s *root, function_s *f_root)
                         data.start_end_line[1]=func_line_end;
                         memset(data.name,NULL,20);
                         strcat(data.name,var_name);
+                        data.amount_call=NULL;
+                        data.call_line=NULL;
+                        data.complexity=NULL;
                         add_function(&data,f_root);
 
                         //   printf("func;%s --%s--%d--%d\n", var_kind, var_name, var_line, func_line_end);
