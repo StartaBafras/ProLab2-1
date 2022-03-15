@@ -279,6 +279,7 @@ int find_recursive_in_text(char text[][Size], function_s *f_root)
         if (NULL != strstr(p_text, f_root->name))
         {
             call_line_func = i;
+            amount_call_func=1;
             p_text += strlen(f_root->name);
             if (NULL != strstr(p_text, f_root->name))
             {
