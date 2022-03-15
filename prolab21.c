@@ -50,19 +50,18 @@ int main(void)
     find_while(read_txt, l_root);
     connect_loop_and_variable(v_root, l_root);
     find_size(v_root);
-    for (int i = 0; i < 15; i++)
+    int c = 0;
+    for (int i = 0; i < 22; i++)
     {
-    find_increase_case1(read_txt[i],30);
+        c = find_increase_case1(read_txt[i],30,i,v_root);
       
     }
-    
+
 
     int error = 0;
-    int dizi[5] = {1, 2, 3, 4, 5};
-    int boyut = sizeof(dizi);
-    toplam(dizi, boyut);
 
-    error = move_and_compile();
+
+
 
     if (0 != error)
     {

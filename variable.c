@@ -57,7 +57,7 @@ variable_s* search_variable(char *variable,int varibale_line ,variable_s *root)
     
     while(1)
     {
-        if( 0 == strcmp(variable,root->name) && varibale_line == root->line)
+        if( 0 == strcmp(variable,root->name) && varibale_line >= root->line)
         {
             printf("%d\n",root->line);
             return root;
