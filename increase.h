@@ -14,7 +14,7 @@
 
 int find_char(char *message, char c,int size);
 
-int find_increase_case1(char *message, int size,variable_s *var);
+int find_increase_case1(char *message, int size, int line,variable_s *root);
 
 int find_increase_case2(char *message, int size);
 
@@ -23,6 +23,8 @@ int sentence_divider(char *message_p[],char *message, int word);
 int find_complex_increase(char *message, int size, int line_number, variable_s *root);
 
 int clear_comma(char *message,int size);
+
+char* detect_variable(char *message, int location, int size);
 
 
 #endif

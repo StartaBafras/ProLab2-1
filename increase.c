@@ -17,7 +17,6 @@
 */
 int find_char(char *message, char c, int size)
 {
-    printf("%s",message);
     if(message != NULL)
     {
         for(int i=0; i < size; i++)
@@ -38,16 +37,17 @@ int find_char(char *message, char c, int size)
  * @return -1: Bulunamadı 
  * 
  */
-int find_increase_case1(char *message, int size,variable_s *var)
+int find_increase_case1(char *message, int size, int line,variable_s *root)
 {
     int error= 0;
-
+ 
     error = find_char(message, '+', size);
     if(error != -1)
     {
         if(message[error+1] == '+')
         {
-            var->increase_rate = LINEER_POSITIVE;
+            char *v = detect_variable(message,error,size);
+            search_variable(v,line,root)->increase_rate = LINEER_POSITIVE;
             return LINEER_POSITIVE; // Lineer artış
         }
     }
@@ -57,7 +57,7 @@ int find_increase_case1(char *message, int size,variable_s *var)
     {
         if(message[error+1] == '-')
         {
-            var->increase_rate = LINEER_NEGATIVE;
+            search_variable(detect_variable(message,error,size),line,root)->increase_rate = LINEER_NEGATIVE;
             return LINEER_NEGATIVE; // Lineer azalış
         }
     }
@@ -66,6 +66,50 @@ int find_increase_case1(char *message, int size,variable_s *var)
     return -1;
 }
 
+/**
+ * @brief Verilen satırdaki değişkenleri bitişik olan karakterler mantığını kullanarak ayırt etmeyi sağlar.
+ * 
+ * @param message Karakter dizisi.
+ * @param location Karakter dizisinde başlanacak yer.
+ * @param Karakter dizisinin boyutu.
+ * 
+ * @return Değişkenin ismi
+ */
+char* detect_variable(char *message, int location, int size)
+{
+    int begin = location+1;
+    int end = location-1 ;
+
+    for(int i=location; i<size; i++)
+    {
+        if( message[i] != ';' && message[i] != ' ' && message[i] != ',')
+        {
+            end++;
+        }
+        else break;
+    }
+
+    for(int i=location;i >=0; i--)
+    {
+        if( message[i] != ';' && message[i] != ' ' && message[i] != ',')
+        {
+            begin--;
+        }
+        else break;
+    } 
+
+    char *variable = malloc(sizeof(char) * (end-begin+1));
+
+    for(int i=begin; i<=end;i++)
+    {   
+        if(message[i] != '+' && message[i] != '-')
+        {
+            variable[i-begin] = message[i];
+        }
+    }
+
+    return variable;
+}
 /**
  * @brief Arttırımlarda +=, *= gibi durumları tespit etmeye çalışır.
  * 
