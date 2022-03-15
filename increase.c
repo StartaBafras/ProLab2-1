@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "increase.h"
-
+#include "variable.h"
 
 
 /**
@@ -17,15 +17,17 @@
 */
 int find_char(char *message, char c, int size)
 {
+    printf("%s",message);
     if(message != NULL)
     {
-            for(int i=0; i < size; i++)
+        for(int i=0; i < size; i++)
         {
-        if(message[i] == c) return i;
+            if(message[i] == c) return i;
         }
 
-    return -1;
     }
+    return -1;
+
 
 }
 
@@ -36,7 +38,7 @@ int find_char(char *message, char c, int size)
  * @return -1: Bulunamadı 
  * 
  */
-int find_increase_case1(char *message, int size)
+int find_increase_case1(char *message, int size,variable_s *var)
 {
     int error= 0;
 
@@ -45,6 +47,7 @@ int find_increase_case1(char *message, int size)
     {
         if(message[error+1] == '+')
         {
+            var->increase_rate = LINEER_POSITIVE;
             return LINEER_POSITIVE; // Lineer artış
         }
     }
@@ -54,14 +57,23 @@ int find_increase_case1(char *message, int size)
     {
         if(message[error+1] == '-')
         {
+            var->increase_rate = LINEER_NEGATIVE;
             return LINEER_NEGATIVE; // Lineer azalış
         }
     }
 
+
     return -1;
 }
 
-
+/**
+ * @brief Arttırımlarda +=, *= gibi durumları tespit etmeye çalışır.
+ * 
+ * @param message Satırın kendisi.
+ * @param size Satırın genişliği.
+ * 
+ * @return Artış değeri.
+ */
 int find_increase_case2(char *message, int size)
 {
     int error = 0;
@@ -91,14 +103,17 @@ int find_increase_case2(char *message, int size)
 
 /**
  * @brief Başka değişkene bağlı olarak artan veya azalan değişkenleri analiz eder.
- * @param message İlgili satırın tamamı
- * @param size Satırı içeren dizinin uzunluğu
+ * 
+ * @param root Değişkenler bağlı listesini işaret eden kök işaretçisi.
+ * @param message Hesaplanacak satır.
+ * @param size Satırı içeren dizinin uzunluğu.
+ * @param line_number Satır numarası.
  * 
  */
-int find_complex_increase(char *message, int size)
+int find_complex_increase(char *message, int size, int line_number, variable_s *root)
 {
     int error = 0;
-    int word = 1;
+    int word = 2; // Boşluk saydığımız için 1 ile başlıyor, +1 de noktalı virgülden gelmekte
 
     error = find_char(message,'=',size); // Eşittir olup olmadığının kontrolü
 
@@ -107,33 +122,44 @@ int find_complex_increase(char *message, int size)
     for(int i=0; i<size; i++) if(message[i] == ' ') word++;
 
     char *m_p[word];
+
+
     sentence_divider(m_p,message,word);
+    m_p[word-1] = ";";
     
     error = find_char(message,'(',size);
 
-    if(error == -1) return -1;
+    if(error != -1) return -1; // Çıkış yapıyor ancak paranteze göre durum eklenmeli
 
-
-
-
+    for(int i=0; i<word; i++)
+    {
+        if(0 == strcmp(m_p[i],"="))
+        {
+            for(int j=i; j<word;j++)
+            {
+                if(0 == strcmp(m_p[j],";") || 0 == strcmp(m_p[j],"," ))
+                {
+                    search_variable(m_p[i-1],line_number,root)->increase_rate = calculate_compexity(m_p,i,j,root);
+                    i = j;
+                }
+            }
+        }
+    }
 
 }
 
-int calculata_compexity(char *d_m[],int word)
+int calculate_compexity(char *d_m[],int begin_index, int end_index, variable_s *root)
 {
-    int i=0;
-    for(;d_m[i] != '=';i++);
-
-
 
 }
+
 
 /**
- * @brief Alınan mesajın içindeki virül karekterlerini boşluk olarak değiştirir.
+ * @brief Alınan mesajın içindeki virgül karekterlerini boşluk olarak değiştirir.
  * @param message Karakterleri içeren dizi.
  * @param size Dizinin boyutu.
  */
-int clear_line(char *message,int size)
+int clear_comma(char *message,int size)
 {
     for(int i=0; i<size; i++)
     {
@@ -172,21 +198,7 @@ int sentence_divider(char *message_p[],char *message, int word)
             message_p[i][error] = '\0';
         }
     }
+    
 
     return 0;
 }
-/*
-int main(void)
-{
-    char q[8] = "a = i++";
-
-    int error = 0;
-
-    error = find_char(q,'=',sizeof(q));
-
-    if(error != -1)
-    {
-        error = find_increase(&q[error],sizeof(q)-error-1);
-    }
-    
-}*/

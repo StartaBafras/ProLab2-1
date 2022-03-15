@@ -8,7 +8,7 @@ typedef struct function_s
 {
     char name[20];
     int start_end_line[2];
-    loop_s_pointer loops_inside;
+    loop_s_pointer *loops_inside;
     struct function_s_pointer *function_inside;
     int complexity;
     int amount_call;
