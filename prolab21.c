@@ -22,6 +22,8 @@ int main(void)
 {
     variable_s *v_root = malloc(sizeof(variable_s));
     loop_s *l_root = malloc(sizeof(loop_s));
+    function_s *f_root = malloc(sizeof(function_s));
+
 
     char read_txt[Size][Size]; // dosya içeriği
 
@@ -45,7 +47,7 @@ int main(void)
         }
     }
 
-    find_variables(read_txt, v_root);
+    find_variables(read_txt, v_root,f_root);
     find_for(read_txt, l_root);
     find_while(read_txt, l_root);
     connect_loop_and_variable(v_root, l_root);
