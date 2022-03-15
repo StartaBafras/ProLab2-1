@@ -1,7 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "function.h"
 #include <string.h>
+
+#include "function.h"
+
+
 
 
 int write_function_data(function_s *data, function_s *function_root)

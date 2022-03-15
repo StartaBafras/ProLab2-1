@@ -24,5 +24,6 @@ typedef struct function_s_pointer
 
 }function_s_pointer;
 
+loop_s* search_loop(int begin_line, loop_s *root);
 
 #endif
