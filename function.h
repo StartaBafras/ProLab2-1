@@ -32,4 +32,8 @@ int add_function(function_s *data, function_s *function_root);
 int write_function_data(function_s *data, function_s *function_root);
 
 int find_variables(char text[][Size], variable_s *root,function_s *f_root); // değişken türünü ismini yerini bulur
+
+
+void find_recursive_in_struct(char text[][Size],function_s *f_root);
+int find_recursive_in_text(char text[][Size], function_s *f_root);
 #endif

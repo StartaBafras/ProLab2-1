@@ -14,7 +14,7 @@ int write_function_data(function_s *data, function_s *function_root)
     strcpy(function_root->name, data->name);
     function_root->start_end_line[0] = data->start_end_line[0];
     function_root->start_end_line[1] = data->start_end_line[1];
-   // printf("%s--%d--%d\n",data->name,data->start_end_line[0],data->start_end_line[1]);
+    // printf("%s--%d--%d\n",data->name,data->start_end_line[0],data->start_end_line[1]);
 }
 
 int add_function(function_s *data, function_s *function_root)
@@ -159,14 +159,14 @@ int find_variables(char text[][Size], variable_s *root, function_s *f_root)
                         func_line_end = find_line_end(var_line, text);
                         strcat(var_kind, "func");
                         function_s data;
-                        data.start_end_line[0]=var_line;
-                        data.start_end_line[1]=func_line_end;
-                        memset(data.name,NULL,20);
-                        strcat(data.name,var_name);
-                        data.amount_call=NULL;
-                        data.call_line=NULL;
-                        data.complexity=NULL;
-                        add_function(&data,f_root);
+                        data.start_end_line[0] = var_line;
+                        data.start_end_line[1] = func_line_end;
+                        memset(data.name, NULL, 20);
+                        strcat(data.name, var_name);
+                        data.amount_call = NULL;
+                        data.call_line = NULL;
+                        data.complexity = NULL;
+                        add_function(&data, f_root);
 
                         //   printf("func;%s --%s--%d--%d\n", var_kind, var_name, var_line, func_line_end);
                         memset(var_name, NULL, c_Size_l);
@@ -231,4 +231,64 @@ int find_variables(char text[][Size], variable_s *root, function_s *f_root)
     }
 
     return 0;
+}
+
+/**
+ *@brief fonksiyon struct'ını alır ve içinde gezinir.
+ * amaç rekursif olan fonksiyonları tespit etmek.
+ *
+ *@param text Dosyadan okunan read_txt'i alır.
+ *
+ * @param f_root fonksiyon struct'ın rootunu alır
+ * */
+
+void find_recursive_in_struct(char text[][Size], function_s *f_root)
+{
+
+    if (f_root != NULL)
+    {
+        find_recursive_in_text(text, f_root);
+    }
+
+    if (f_root->next != NULL)
+    {
+        find_recursive(text, f_root->next);
+    }
+}
+
+/**
+ *@brief Fonksiyonun başlangıç ve bitiş satırını alır ve  text içinde gezinir.
+ * Amaç rekursif olan fonksiyonları tespit etmek.
+ * Fonsiyonun başlangıç ve bitiş yerleri arasında gezer.
+ * Aynı satırda birden fazla varsa amount değişkenini artırır
+ * 
+ *
+ *@param text Dosyadan okunan read_txt'i alır.
+ *
+ * @param f_root Fonksiyon struct'ın rootunu alır
+ *
+ */
+int find_recursive_in_text(char text[][Size], function_s *f_root)
+{
+    char *p_text;
+    int amount_call_func = 0;
+    int call_line_func = 0;
+    for (int i = f_root->start_end_line[0]; i < f_root->start_end_line[1]; i++)
+    {
+        p_text = text[i];
+        if (NULL != strstr(p_text, f_root->name))
+        {
+            call_line_func = i;
+            p_text += strlen(f_root->name);
+            if (NULL != strstr(p_text, f_root->name))
+            {
+                amount_call_func++;
+                i--;
+            }
+        }
+    }
+
+
+    f_root->amount_call=amount_call_func;
+    f_root->call_line=call_line_func;
 }
