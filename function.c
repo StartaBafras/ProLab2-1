@@ -376,8 +376,16 @@ void size_sum(variable_s *v_root, function_s *f_root)
         }
     }
 
-    strcat(sum_char, size_sum_function(f_root));//fonksiyonların boyutunu hesaplayan fonksiyon çağırılır
-    printf("%s %d\n", sum_char, sum_int);
+    strcat(sum_char, size_sum_function(f_root)); // fonksiyonların boyutunu hesaplayan fonksiyon çağırılır
+    printf("\nYer Karmaşıklığı: %s %d\n", sum_char, sum_int);
+    if (sum_char[0] != '\0')
+    {
+        big_O_calculator_for_size(sum_char);//eğer sabit yer karmaşıklığı değilse fonksiyon çağrılır.
+    }
+    else
+    {
+        printf("O(1)");//sabit yer karmaşıklığı ise
+    }
 }
 
 /**
@@ -412,6 +420,47 @@ char *size_sum_function(function_s *f_root)
             break;
         }
     }
-    char *p_char= sum_char_func;
-    return p_char;//adresini döndürür
+    char *p_char = sum_char_func;
+    return p_char; // adresini döndürür
+}
+/**
+ * @brief Yer karmaşıklığının Big-O'sunu hesaplar.
+ *Strtok kullanarak boşluklardan böler.
+ *Böldüğü stringlerin hangisi uzun ise onu seçer ve sadece harfleri bastırır.
+ *  @param  big_O_text yer karmaşıklığının olduğu string'i alır.
+ * 
+ */
+void big_O_calculator_for_size(char *big_O_text)
+{
+    char big_o_temp[c_Size_s][c_Size_s];
+    memset(big_o_temp, NULL, c_Size_s);
+    char *token = strtok(big_O_text, " ");//boşluklara göre böler
+    int i = 0;
+    int max_lenght = 0;
+    int big_O_index=0;
+    while (token != NULL)
+    {
+
+        strcat(big_o_temp[i], token);
+
+        if (max_lenght < strlen(big_o_temp[i]))
+        {
+            max_lenght = strlen(big_o_temp[i]);
+            big_O_index=i;
+        }
+        i++;
+
+    //printf(" %s\n", token);
+    token = strtok(NULL, " ");
+    }
+     printf("BİG-O Notasyonu: O(");
+    for (int j = 0; j <strlen(big_o_temp[big_O_index]); j++)
+    {
+        if ('A'<=big_o_temp[big_O_index][j])
+        {
+            printf("%c",big_o_temp[big_O_index][j]);
+        }
+        
+    }
+    printf(")\n\n");
 }

@@ -45,4 +45,6 @@ void size_sum(variable_s *v_root,function_s *f_root);
 
 char *size_sum_function(function_s *f_root);
 
+void big_O_calculator_for_size(char *big_O_text);
+
 #endif
