@@ -13,6 +13,7 @@ typedef struct function_s
     int complexity;
     int amount_call;
     int call_line;
+    char size[20];
     struct function_s *next;
 
 }function_s;
@@ -29,11 +30,14 @@ loop_s* search_loop(int begin_line, loop_s *root);
 int add_loop_in_function(function_s *function_struct, int loop_begin_line, loop_s *root);
 
 int add_function(function_s *data, function_s *function_root);
+
 int write_function_data(function_s *data, function_s *function_root);
 
 int find_variables(char text[][Size], variable_s *root,function_s *f_root); // değişken türünü ismini yerini bulur
 
-
 void find_recursive_in_struct(char text[][Size],function_s *f_root);
+
 int find_recursive_in_text(char text[][Size], function_s *f_root);
+
+void find_size_function(int amount_call_func,function_s *f_root);
 #endif
