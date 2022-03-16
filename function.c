@@ -216,10 +216,10 @@ int find_variables(char text[][Size], variable_s *root, function_s *f_root)
                         strcat(data.kind, var_kind);
                         data.line = var_line;
                         // data.id = 0;
+                        memset(data.name, NULL, strlen(data.name));
                         strcat(data.name, var_name);
                         add_variable_data(&data, root);
                         //  printf("%s --%s--%d\n", var_kind, var_name, var_line);
-                        memset(data.name, NULL, strlen(data.name));
                         data.line = NULL;
                     }
                 }
