@@ -84,6 +84,7 @@ int find_for(char text[][Size], loop_s *l_root)
             memset(l_raise_temp, NULL, c_Size_l);
             strcat(l_raise_temp, p_loop);
             memset(loop_condition, NULL, c_Size_l);
+            int k=0;
 
             for (int j = 0; j < strlen(l_raise_temp); j++) // satırın içini gezer
 
@@ -94,7 +95,8 @@ int find_for(char text[][Size], loop_s *l_root)
                 }
                 if ('A' <= l_raise_temp[j])
                 {
-                    loop_condition[j] = l_raise_temp[j];
+                    loop_condition[k] = l_raise_temp[j];
+                    k++;
                 }
             }
 
