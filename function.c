@@ -245,17 +245,17 @@ int find_variables(char text[][Size], variable_s *root, function_s *f_root)
  * @param f_root fonksiyon struct'ın rootunu alır
  * */
 
-void find_recursive_in_struct(char text[][Size], function_s *f_root,variable_s *v_root) // struct'ta fonksiyonları gezer
+void find_recursive_in_struct(char text[][Size], function_s *f_root, variable_s *v_root) // struct'ta fonksiyonları gezer
 {
 
     if (f_root != NULL)
     {
-        find_recursive_in_text(text, f_root,v_root); // fonkisyon için rekursif bulan fonksiyon çağırılır
+        find_recursive_in_text(text, f_root, v_root); // fonkisyon için rekursif bulan fonksiyon çağırılır
     }
 
     if (f_root->next != NULL)
     {
-        find_recursive_in_struct(text, f_root->next,v_root); // sonraki fonksiyon var mı bakılır
+        find_recursive_in_struct(text, f_root->next, v_root); // sonraki fonksiyon var mı bakılır
     }
 }
 
@@ -271,7 +271,7 @@ void find_recursive_in_struct(char text[][Size], function_s *f_root,variable_s *
  * @param f_root Fonksiyon struct'ın rootunu alır
  *
  */
-int find_recursive_in_text(char text[][Size], function_s *f_root,variable_s *v_root)
+int find_recursive_in_text(char text[][Size], function_s *f_root, variable_s *v_root)
 {
     char *p_text;
     int amount_call_func = 0;
@@ -310,7 +310,12 @@ int find_recursive_in_text(char text[][Size], function_s *f_root,variable_s *v_r
     if (amount_call_func != 0) // eğer sıfırdan farklı ise rekürsiftir
     {
         find_size_function(amount_call_func, f_root);
-        find_size(v_root,f_root->start_end_line[0],f_root->start_end_line[1]);
+        find_size(v_root, f_root->start_end_line[0], f_root->start_end_line[1]);
+    }
+    else
+    {
+
+        find_size(v_root, Size, 0);
     }
 }
 
@@ -329,4 +334,43 @@ void find_size_function(int amount_call_func, function_s *f_root)
     {
         strcat(f_root->size, "n");
     }
+}
+/**
+ * @brief Değişken boyutları toplarını toplar.
+ *
+ *  @param v_root Değişkene bağlı struct'ı işaret eden kök işaretçisi.
+ *
+ *
+ */
+void sizde_sum(variable_s *v_root)
+{
+    int sum_int = 0; // toplam boyutu tutar
+    char sum_char[c_Size_l];
+    memset(sum_char, NULL, c_Size_l);
+    while (v_root != NULL)
+    {
+        if (v_root->size[0] != '\0')
+        {
+
+            if (NULL != strstr(v_root->size, "n"))
+            {
+                strcat(sum_char, v_root->size);
+                strcat(sum_char, " ");
+            }
+            else
+            {
+
+                sum_int += atoi(v_root->size);
+            }
+        }
+        if (v_root->next != NULL)
+        {
+            v_root = v_root->next;
+        }
+        else
+        {
+            break;
+        }
+    }
+    printf("%s %d", sum_char, sum_int);
 }

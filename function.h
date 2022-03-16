@@ -40,4 +40,6 @@ void find_recursive_in_struct(char text[][Size],function_s *f_root,variable_s *v
 int find_recursive_in_text(char text[][Size], function_s *f_root,variable_s *v_root);
 
 void find_size_function(int amount_call_func,function_s *f_root);
+
+void sizde_sum(variable_s *v_root);
 #endif
