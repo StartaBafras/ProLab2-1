@@ -54,9 +54,9 @@ int main(void)
     //find_size(v_root);
     find_recursive_in_struct(read_txt,f_root,v_root);
     int c = 0;
-    for (int i = 0; i < 22; i++)
+    for (int i = 0; i < 150; i++)
     {
-        c = find_increase_case1(read_txt[i],30,i,v_root);
+        c = find_increase_case1(read_txt[i],150,i,v_root);
       
     }
 
