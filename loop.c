@@ -315,3 +315,28 @@ int research_variable_connect_loop_different_line(variable_s *v_root, loop_s *l_
         research_variable_connect_loop_different_line(v_root = v_root->next, l_root);
     }
 }
+
+int add_variable_in_loop(char *variable, int variable_line, variable_s *v_root, loop_s *loop_struct)
+{
+    variable_s *new_v = search_variable(variable,variable_line,v_root);
+
+    if(new_v == NULL) return -1;
+
+    if(loop_struct->dependent_variable->variable == NULL)
+    {
+        loop_struct->dependent_variable->variable = new_v;
+        return 0;
+    }
+
+    variable_s_pointer *new_p;
+
+    new_p = loop_struct->dependent_variable;
+
+    while (new_p->next != NULL) new_p = new_p->next;
+    
+    new_p->next = malloc(sizeof(variable_s_pointer));
+
+    new_p->next->variable = new_v;
+    new_p->next->next = NULL;
+
+}

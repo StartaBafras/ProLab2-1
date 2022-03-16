@@ -19,7 +19,7 @@ typedef struct variable_s
 typedef struct variable_s_pointer
 {
     variable_s *variable; 
-    variable_s_pointer *next;
+    struct variable_s_pointer *next;
 }variable_s_pointer;
 
 int write_variable_data(variable_s *data, variable_s *variable_p);
@@ -35,6 +35,5 @@ int find_same_line_var(char name_var[50], int var_line, char var_kind[c_Size_s],
 void find_size(variable_s *v_root);
 
 
-int add_variable_in_loop(char *veriable, int variable_line, variable_s *v_root, loop_s *loop_struct);
 
 #endif

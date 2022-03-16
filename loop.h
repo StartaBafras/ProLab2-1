@@ -53,5 +53,6 @@ int research_variable_connect_loop_different_line(variable_s *v_root, loop_s *l_
 
 int find_line_end(int line_start, char text[][Size]); // iç içe for bulur
 
+int add_variable_in_loop(char *veriable, int variable_line, variable_s *v_root, loop_s *loop_struct);
 
 #endif
