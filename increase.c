@@ -37,7 +37,7 @@ int find_char(char *message, char c, int size)
  * @return -1: Bulunamadı 
  * 
  */
-int find_increase_case1(char *message, int size, int line,variable_s *root)
+int find_increase_case1(char *message, int size, int line,variable_s *v_root)
 {
     int error= 0;
  
@@ -47,7 +47,7 @@ int find_increase_case1(char *message, int size, int line,variable_s *root)
         if(message[error+1] == '+')
         {
             char *v = detect_variable(message,error,size);
-            search_variable(v,line,root)->increase_rate = LINEER_POSITIVE;
+            search_variable(v,line,v_root)->increase_rate = LINEER_POSITIVE;
             return LINEER_POSITIVE; // Lineer artış
         }
     }
@@ -57,7 +57,7 @@ int find_increase_case1(char *message, int size, int line,variable_s *root)
     {
         if(message[error+1] == '-')
         {
-            search_variable(detect_variable(message,error,size),line,root)->increase_rate = LINEER_NEGATIVE;
+            search_variable(detect_variable(message,error,size),line,v_root)->increase_rate = LINEER_NEGATIVE;
             return LINEER_NEGATIVE; // Lineer azalış
         }
     }
@@ -82,7 +82,7 @@ char* detect_variable(char *message, int location, int size)
 
     for(int i=location; i<size; i++)
     {
-        if( message[i] != ';' && message[i] != ' ' && message[i] != ',')
+        if( message[i] != ';' && message[i] != ' ' && message[i] != ',' && message[i] != '\0' && message[i] != ')' && message[i] != '('  )
         {
             end++;
         }
@@ -119,30 +119,98 @@ char* detect_variable(char *message, int location, int size)
  * 
  * @return Artış değeri.
  */
-int find_increase_case2(char *message, int size)
+int find_increase_case2(char *message, int size,int line,variable_s *v_root)
 {
     int error = 0;
-    error = find_char(message,'=',size);
-    if(error != -1)
-    {
-        if(message[error-1] == '+')
-        {
-            return LINEER_POSITIVE;
-        }
-        else if(message[error-1] == '-')
-        {
-            return LINEER_NEGATIVE;
-        }
-        else if(message[error-1] == '*')
-        {
-            return EXPONENTIAL_POSITIVE;
-        }
-        else if(message[error-1] == '/')
-        {
-            return EXPONENTIAL_NEGATIVE;
-        }
-    }
+    int location = 0;
+    char *var;
     
+
+    while(1)
+    {
+
+        error = find_char((message),'=',50);
+        if(error != -1)
+        {
+            if(message[error-1] == '+')
+            {
+                location = error-2;
+
+                while(1)
+                {
+                    if(message[location] != ' ')
+                    {
+                    var = detect_variable(message,location,size);
+                    break;
+                    }
+                    else location--;
+                }
+
+                search_variable(var,line,v_root)->increase_rate = LINEER_POSITIVE;
+
+                return LINEER_POSITIVE;
+            }
+            else if(message[error-1] == '-')
+            {
+                location = error-2;
+
+                while(1)
+                {
+                    if(message[location] != ' ')
+                    {
+                    var = detect_variable(message,location,size);
+                    break;
+                    }
+                    else location--;
+                }
+
+                search_variable(var,line,v_root)->increase_rate = LINEER_NEGATIVE;
+                return LINEER_NEGATIVE;
+            }
+            else if(message[error-1] == '*')
+            {
+                location = error-2;
+
+                while(1)
+                {
+                    if(message[location] != ' ')
+                    {
+                    var = detect_variable(message,location,size);
+                    break;
+                    }
+                    else location--;
+                }
+
+                search_variable(var,line,v_root)->increase_rate = EXPONENTIAL_POSITIVE;
+
+                return EXPONENTIAL_POSITIVE;
+            }
+            else if(message[error-1] == '/')
+            {
+                location = error-2;
+
+                while(1)
+                {
+                    if(message[location] != ' ')
+                    {
+                    var = detect_variable(message,location,size);
+                    break;
+                    }
+                    else location--;
+                }
+
+                search_variable(var,line,v_root)->increase_rate = EXPONENTIAL_NEGATIVE;
+
+                return EXPONENTIAL_NEGATIVE;
+            }
+            for(int i=0; i<=error;i++)
+            {
+                message[i] = '0';
+            }
+            if(error == MAX_SENTENCE_LENGTH) break;
+        }
+        else break;
+    }
     return -1;
 }
 
