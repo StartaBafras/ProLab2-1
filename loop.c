@@ -327,6 +327,17 @@ int research_variable_connect_loop_different_line(variable_s *v_root, loop_s *l_
     }
 }
 
+/**
+ * @brief Verilen döngünün koşulunun bağlı olduğu değişkeni değişkenler bağlı listesinde bulur 
+ * ve döngünün yapısına bağlar.
+ * 
+ * @param variable Döngünün bağlı olduğu değişkenin ismi.
+ * @param variable_line Değişkenin bulunduğu satır.
+ * @param v_root Değişken bağlı listesini işaret eden kök işaretçisi.
+ * @param loop_struct İşlem yapılacak döngüyü işaret eden işaretçi.
+ * 
+ * @return 0: İşlem Tamamlandı
+ */
 int add_variable_in_loop(char *variable, int variable_line, variable_s *v_root, loop_s *loop_struct)
 {
     variable_s *new_v = search_variable(variable,variable_line,v_root);
@@ -349,5 +360,7 @@ int add_variable_in_loop(char *variable, int variable_line, variable_s *v_root, 
 
     new_p->next->variable = new_v;
     new_p->next->next = NULL;
+
+    return 0;
 
 }
