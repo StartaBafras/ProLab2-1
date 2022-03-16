@@ -100,12 +100,13 @@ char* detect_variable(char *message, int location, int size)
 
     char *variable = malloc(sizeof(char) * (end-begin+1));
 
-    for(int i=begin; i<=end;i++)
+    for(int i=begin, j=0; i<=end;i++,j++)
     {   
-        if(message[i] != '+' && message[i] != '-')
+        if(message[i] != '+' && message[i] != '-' && message[i] != ')' && message[i] != '(')
         {
-            variable[i-begin] = message[i];
+            variable[j] = message[i];
         }
+        else j--;
     }
 
     return variable;
