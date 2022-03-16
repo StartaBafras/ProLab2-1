@@ -1,23 +1,16 @@
 #include <stdio.h>
+int factorial (int n) {    
+    if (n <= 1) 
+        return 1 ;
+    else
+        return n * factorial(n-1);
+}
 int main(){
-	int i;
-    int j;
-	int sum = 0;
-	int n=10;
-	int arr[n][n];
-	for (i=0;i<10;i++){
-		for (j=0;j<10;j++){
-		    arr[i][j]=i*j;
-			sum = sum + arr[i][j];
-		}
-	}
-	for (int i=0;i<10;i++)
-	{
-
-	}
-        printf("%d", sum);	
-        return 0;
+    int sonuc,n=6;
+    sonuc=factorial(n);
+    printf("%d", sonuc);	
+    return 0;
         
 }
- //zaman karmaşıklığı=O(n2)
- //yer karmaşıklığı=(4n2+16 O(n2))
+ //zaman karmaşıklığı=O(n).
+ //yer karmaşıklığı=(n+8 O(n))
