@@ -1,17 +1,16 @@
-int Fib(int num)
-
-{
-
-   if ( num == 0 )
-
-      return 0;
-
-   else if ( num == 1 )
-
-      return 1;
-
-   else
-
-      return ( Fib(num-1) + Fib(num - 2) );
-
+#include <stdio.h>
+int main(){
+	int i,j;
+	int sum = 0;
+	int n=10;
+	int arr[n][n];
+	for (i=0;i<10;i++){
+		for (j=0;j<10;j++){
+		    arr[i][j]=i*j;
+			sum = sum + arr[i][j];
+		}
+	}
+        printf("%d", sum);	
+        return 0;
+        
 }
