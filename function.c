@@ -14,8 +14,8 @@ int write_function_data(function_s *data, function_s *function_root)
     strcpy(function_root->name, data->name);
     function_root->start_end_line[0] = data->start_end_line[0];
     function_root->start_end_line[1] = data->start_end_line[1];
-    function_root->next=NULL;
-    memset( function_root->size,NULL,20);
+    function_root->next = NULL;
+    memset(function_root->size, NULL, 20);
     // printf("%s--%d--%d\n",data->name,data->start_end_line[0],data->start_end_line[1]);
 }
 
@@ -218,6 +218,7 @@ int find_variables(char text[][Size], variable_s *root, function_s *f_root)
                         // data.id = 0;
                         memset(data.name, NULL, strlen(data.name));
                         strcat(data.name, var_name);
+                        memset(data.size, NULL, 20);
                         add_variable_data(&data, root);
                         //  printf("%s --%s--%d\n", var_kind, var_name, var_line);
                         data.line = NULL;
@@ -244,17 +245,17 @@ int find_variables(char text[][Size], variable_s *root, function_s *f_root)
  * @param f_root fonksiyon struct'ın rootunu alır
  * */
 
-void find_recursive_in_struct(char text[][Size], function_s *f_root) // struct'ta fonksiyonları gezer
+void find_recursive_in_struct(char text[][Size], function_s *f_root,variable_s *v_root) // struct'ta fonksiyonları gezer
 {
 
     if (f_root != NULL)
     {
-        find_recursive_in_text(text, f_root); // fonkisyon için rekursif bulan fonksiyon çağırılır
+        find_recursive_in_text(text, f_root,v_root); // fonkisyon için rekursif bulan fonksiyon çağırılır
     }
 
     if (f_root->next != NULL)
     {
-        find_recursive_in_struct(text, f_root->next); // sonraki fonksiyon var mı bakılır
+        find_recursive_in_struct(text, f_root->next,v_root); // sonraki fonksiyon var mı bakılır
     }
 }
 
@@ -270,7 +271,7 @@ void find_recursive_in_struct(char text[][Size], function_s *f_root) // struct't
  * @param f_root Fonksiyon struct'ın rootunu alır
  *
  */
-int find_recursive_in_text(char text[][Size], function_s *f_root)
+int find_recursive_in_text(char text[][Size], function_s *f_root,variable_s *v_root)
 {
     char *p_text;
     int amount_call_func = 0;
@@ -306,19 +307,19 @@ int find_recursive_in_text(char text[][Size], function_s *f_root)
 
     f_root->amount_call = amount_call_func; // strucağa verileri aktarır
     f_root->call_line = call_line_func;
-    if (amount_call_func != 0)//eğer sıfırdan farklı ise rekürsiftir
+    if (amount_call_func != 0) // eğer sıfırdan farklı ise rekürsiftir
     {
         find_size_function(amount_call_func, f_root);
+        find_size(v_root,f_root->start_end_line[0],f_root->start_end_line[1]);
     }
 }
-
 
 /**
  * @brief Fonksiyonun çağrılma miktarını alır ve fonsiyonun size'na
  *  çağrılma miktarı kadar n kopyalar bu n yer karmaşıklığını temsil eder.
- * 
+ *
  * @param amount_call_func Fonksiyonun çağrılma miktarını alır.
- * 
+ *
  * @param f_root Fonsiyon struct'ın kökünü alır.
  */
 void find_size_function(int amount_call_func, function_s *f_root)

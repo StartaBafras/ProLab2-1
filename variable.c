@@ -77,13 +77,13 @@ variable_s* search_variable(char *variable,int varibale_line ,variable_s *root)
  *@brief variable struct'ında türlere bakıp boyutunu ekler
  *@param v_root variable struct'ın root'unu alır
  */
-void find_size(variable_s *v_root)
+void find_size(variable_s *v_root,int start_line ,int  end_line)
 {
     char variables[c_Size_s][c_Size_s] = {"pointer", "int", "double", "char", "float", "long", "short", "matrix", "dizi"}; // türler
     char sizes[c_Size_s][c_Size_s] = {" +8", " +4", " +8", " +1", " +4", " +4", " +2", "nn", "n"};
 
     // memset(v_root->size, NULL, c_Size_l);
-    if (v_root != NULL)
+    if ((v_root != NULL)&&((start_line>v_root->line)||(end_line<v_root->line)))
     {
         for (int i = 0; i < 9; i++)
         {
@@ -104,7 +104,7 @@ void find_size(variable_s *v_root)
     //printf("%s --%s\n", v_root->size, v_root->kind);
     if (v_root->next != NULL)
     {
-        find_size(v_root->next);
+        find_size(v_root->next,start_line,end_line);
     }
 }
 /**
@@ -126,6 +126,7 @@ int find_same_line_var(char name_var[50], int var_line, char var_kind[c_Size_s],
         strcat(data.kind, var_kind);
         data.line = var_line;
         // data.id = 0;
+        memset(data.size,NULL,20);
         memset(data.name, NULL, strlen(data.name));
         strcat(data.name, token);
         add_variable_data(&data, root);

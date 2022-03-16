@@ -32,7 +32,7 @@ variable_s* search_variable(char *variable,int varibale_line ,variable_s *root);
 int find_same_line_var(char name_var[50], int var_line, char var_kind[c_Size_s], variable_s *root); // aynı satırdaki değişenleri bulur
 
 
-void find_size(variable_s *v_root);
+void find_size(variable_s *v_root,int start_line,int end_line);
 
 
 

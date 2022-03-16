@@ -51,8 +51,8 @@ int main(void)
     find_for(read_txt, l_root);
     find_while(read_txt, l_root);
     connect_loop_and_variable(v_root, l_root);
-    find_size(v_root);
-    find_recursive_in_struct(read_txt,f_root);
+    //find_size(v_root);
+    find_recursive_in_struct(read_txt,f_root,v_root);
     int c = 0;
     for (int i = 0; i < 22; i++)
     {
