@@ -168,6 +168,7 @@ int find_variables(char text[][Size], variable_s *root, function_s *f_root)
                         data.amount_call = NULL;
                         data.call_line = NULL;
                         data.complexity = NULL;
+                        memset(data.size, NULL, 20);
                         add_function(&data, f_root);
 
                         //   printf("func;%s --%s--%d--%d\n", var_kind, var_name, var_line, func_line_end);
@@ -244,19 +245,22 @@ int find_variables(char text[][Size], variable_s *root, function_s *f_root)
  *
  * @param f_root fonksiyon struct'ın rootunu alır
  * */
-
-void find_recursive_in_struct(char text[][Size], function_s *f_root, variable_s *v_root) // struct'ta fonksiyonları gezer
+int find_recursive_in_struct(char text[][Size], function_s *f_root, variable_s *v_root) // struct'ta fonksiyonları gezer
 {
+
+    int is_control_true = 1;
 
     if (f_root != NULL)
     {
-        find_recursive_in_text(text, f_root, v_root); // fonkisyon için rekursif bulan fonksiyon çağırılır
+        is_control_true = find_recursive_in_text(text, f_root, v_root); // fonkisyon için rekursif bulan fonksiyon çağırılır
     }
 
     if (f_root->next != NULL)
     {
         find_recursive_in_struct(text, f_root->next, v_root); // sonraki fonksiyon var mı bakılır
     }
+
+    return is_control_true;
 }
 
 /**
@@ -276,7 +280,8 @@ int find_recursive_in_text(char text[][Size], function_s *f_root, variable_s *v_
     char *p_text;
     int amount_call_func = 0;
     int call_line_func = 0;
-    int is_call_same_line = 1; // aynı satırda çağrılmış mı
+    int is_call_same_line = 1;      // aynı satırda çağrılmış mı
+    int is_call_find_size_func = 1; // fonkiyonu birden fazla çağrımamak için
     for (int i = f_root->start_end_line[0] + 1; i < f_root->start_end_line[1]; i++)
     {
         if (is_call_same_line == 1) // aynı satırda çarğılmışsa satırı kaybetmemek için
@@ -311,12 +316,9 @@ int find_recursive_in_text(char text[][Size], function_s *f_root, variable_s *v_
     {
         find_size_function(amount_call_func, f_root);
         find_size(v_root, f_root->start_end_line[0], f_root->start_end_line[1]);
+        return 0;
     }
-    else
-    {
-
-        find_size(v_root, Size, 0);
-    }
+    return 1;
 }
 
 /**
@@ -335,14 +337,15 @@ void find_size_function(int amount_call_func, function_s *f_root)
         strcat(f_root->size, "n");
     }
 }
+
 /**
- * @brief Değişken boyutları toplarını toplar.
+ * @brief Değişken ve rekursif  boyutlarını  toplar.
  *
  *  @param v_root Değişkene bağlı struct'ı işaret eden kök işaretçisi.
  *
- *
+ * @param f_root fonksiyona bağlı struct'ı işaret eden kök işaretçisi.
  */
-void sizde_sum(variable_s *v_root)
+void size_sum(variable_s *v_root, function_s *f_root)
 {
     int sum_int = 0; // toplam boyutu tutar
     char sum_char[c_Size_l];
@@ -372,5 +375,43 @@ void sizde_sum(variable_s *v_root)
             break;
         }
     }
-    printf("%s %d", sum_char, sum_int);
+
+    strcat(sum_char, size_sum_function(f_root));//fonksiyonların boyutunu hesaplayan fonksiyon çağırılır
+    printf("%s %d\n", sum_char, sum_int);
+}
+
+/**
+ * @brief Rekürsif fonksiyonların boyutlarını  toplar.
+ *
+ *  @param f_root Fonksiyona bağlı struct'ı işaret eden kök işaretçisi.
+ *
+ *@return Rekursif fonksiyonun boyutunu dönderir.
+ *
+ */
+char *size_sum_function(function_s *f_root)
+{
+    char sum_char_func[c_Size_l];
+    memset(sum_char_func, NULL, c_Size_l);
+    while (f_root != NULL)
+    {
+        if (f_root->size[0] != '\0')
+        {
+
+            if (NULL != strstr(f_root->size, "n"))
+            {
+                strcat(sum_char_func, f_root->size);
+                strcat(sum_char_func, " ");
+            }
+        }
+        if (f_root->next != NULL)
+        {
+            f_root = f_root->next;
+        }
+        else
+        {
+            break;
+        }
+    }
+    char *p_char= sum_char_func;
+    return p_char;//adresini döndürür
 }
