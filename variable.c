@@ -78,7 +78,7 @@ variable_s* search_variable(char *variable,int varibale_line ,variable_s *root)
 void find_size(variable_s *v_root)
 {
     char variables[c_Size_s][c_Size_s] = {"pointer", "int", "double", "char", "float", "long", "short", "matrix", "dizi"}; // türler
-    char sizes[c_Size_s][c_Size_s] = {" +8", " +4", " +8", " +1", " +4", " +4", " +2", "n2", "n"};
+    char sizes[c_Size_s][c_Size_s] = {" +8", " +4", " +8", " +1", " +4", " +4", " +2", "nn", "n"};
 
     // memset(v_root->size, NULL, c_Size_l);
     if (v_root != NULL)
