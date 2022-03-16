@@ -127,6 +127,7 @@ int find_for(char text[][Size], loop_s *l_root)
             data.start_end_line[0] = line_loop_start;
             data.start_end_line[1] = line_loop_end;
             data.id = 0;
+             data.complexity=NULL;
             add_loop(&data, l_root);
         }
     }
@@ -213,6 +214,8 @@ int find_while(char text[][Size], loop_s *l_root)
             data.start_end_line[0] = line_loop_start;
             data.start_end_line[1] = line_loop_end;
             data.id = 0;
+            data.complexity=NULL;
+        
             add_loop(&data, l_root);
         }
     }
