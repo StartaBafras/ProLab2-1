@@ -118,6 +118,9 @@ int find_for(char text[][Size], loop_s *l_root)
             line_loop_end = find_line_end(line_loop_start, text);
             // printf("--%s ---%s --%d  --%s--%d \n", name_loop, raise_loop, line_loop_start, loop_condition, line_loop_end);
             loop_s data;
+            data.dependent_variable=malloc(sizeof(variable_s_pointer));
+            data.dependent_variable->next=NULL;
+            data.dependent_variable->variable=NULL;
             data.kind = v_FOR;
             memset(data.condition, NULL, c_Size_s);
             strcat(data.condition, loop_condition);
@@ -194,6 +197,9 @@ int find_while(char text[][Size], loop_s *l_root)
 
             //  printf("--%s  --%d  --%s--%d \n", name_loop, line_loop_start, loop_condition, line_loop_end);
             loop_s data;
+            data.dependent_variable=malloc(sizeof(variable_s_pointer));
+            data.dependent_variable->next=NULL;
+            data.dependent_variable->variable=NULL;
             if (NULL != strstr(name_loop, "do"))
             {
                 data.kind = V_WHILE_DO;
