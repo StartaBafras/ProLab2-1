@@ -63,6 +63,21 @@ int main(void)
 
     int error = 0;
 
+    loop_s *variable_loop_connect = l_root;
+
+
+    while(1)
+    {
+        add_variable_in_loop(variable_loop_connect->condition,11,v_root,variable_loop_connect);
+
+        if(variable_loop_connect->next == NULL) break;
+        else variable_loop_connect = variable_loop_connect->next;
+    }
+
+    
+
+
+
 
 
 
