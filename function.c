@@ -14,6 +14,8 @@ int write_function_data(function_s *data, function_s *function_root)
     strcpy(function_root->name, data->name);
     function_root->start_end_line[0] = data->start_end_line[0];
     function_root->start_end_line[1] = data->start_end_line[1];
+    function_root->next=NULL;
+    memset( function_root->size,NULL,20);
     // printf("%s--%d--%d\n",data->name,data->start_end_line[0],data->start_end_line[1]);
 }
 
@@ -242,17 +244,17 @@ int find_variables(char text[][Size], variable_s *root, function_s *f_root)
  * @param f_root fonksiyon struct'ın rootunu alır
  * */
 
-void find_recursive_in_struct(char text[][Size], function_s *f_root)//struct'ta fonksiyonları gezer 
+void find_recursive_in_struct(char text[][Size], function_s *f_root) // struct'ta fonksiyonları gezer
 {
 
     if (f_root != NULL)
     {
-        find_recursive_in_text(text, f_root);//fonkisyon için rekursif bulan fonksiyon çağırılır
+        find_recursive_in_text(text, f_root); // fonkisyon için rekursif bulan fonksiyon çağırılır
     }
 
     if (f_root->next != NULL)
     {
-        find_recursive_in_struct(text, f_root->next);//sonraki fonksiyon var mı bakılır
+        find_recursive_in_struct(text, f_root->next); // sonraki fonksiyon var mı bakılır
     }
 }
 
@@ -273,10 +275,10 @@ int find_recursive_in_text(char text[][Size], function_s *f_root)
     char *p_text;
     int amount_call_func = 0;
     int call_line_func = 0;
-    int is_call_same_line = 1;// aynı satırda çağrılmış mı 
+    int is_call_same_line = 1; // aynı satırda çağrılmış mı
     for (int i = f_root->start_end_line[0] + 1; i < f_root->start_end_line[1]; i++)
     {
-        if (is_call_same_line == 1) //aynı satırda çarğılmışsa satırı kaybetmemek için
+        if (is_call_same_line == 1) // aynı satırda çarğılmışsa satırı kaybetmemek için
         {
             p_text = text[i];
         }
@@ -289,19 +291,41 @@ int find_recursive_in_text(char text[][Size], function_s *f_root)
             }
             p_text = strstr(p_text, f_root->name);
             p_text += strlen(f_root->name);
-            if (NULL != strstr(p_text, f_root->name))//aynı satırda tekrar çağrılmış  mı
+            if (NULL != strstr(p_text, f_root->name)) // aynı satırda tekrar çağrılmış  mı
             {
-                amount_call_func++;//çağrılma miktarı artar
-                i--;// döngü tekrarlanır
-                is_call_same_line = -1;// aynı satırda tekrar çağrılmıştır 
+                amount_call_func++;     //çağrılma miktarı artar
+                i--;                    // döngü tekrarlanır
+                is_call_same_line = -1; // aynı satırda tekrar çağrılmıştır
             }
-            else//aynı satırda yoksa
+            else // aynı satırda yoksa
             {
                 is_call_same_line = 1;
             }
         }
     }
 
-    f_root->amount_call = amount_call_func;//strucağa verileri aktarır
+    f_root->amount_call = amount_call_func; // strucağa verileri aktarır
     f_root->call_line = call_line_func;
+    if (amount_call_func != 0)//eğer sıfırdan farklı ise rekürsiftir
+    {
+        find_size_function(amount_call_func, f_root);
+    }
+}
+
+
+/**
+ * @brief Fonksiyonun çağrılma miktarını alır ve fonsiyonun size'na
+ *  çağrılma miktarı kadar n kopyalar bu n yer karmaşıklığını temsil eder.
+ * 
+ * @param amount_call_func Fonksiyonun çağrılma miktarını alır.
+ * 
+ * @param f_root Fonsiyon struct'ın kökünü alır.
+ */
+void find_size_function(int amount_call_func, function_s *f_root)
+{
+    memset(f_root->size, NULL, 20);
+    for (int i = 0; i < amount_call_func; i++)
+    {
+        strcat(f_root->size, "n");
+    }
 }
