@@ -259,7 +259,7 @@ int find_recursive_in_struct(char text[][Size], function_s *f_root, variable_s *
 
     if (f_root->next != NULL)
     {
-        find_recursive_in_struct(text, f_root->next, v_root); // sonraki fonksiyon var mı bakılır
+      is_control_true=  find_recursive_in_struct(text, f_root->next, v_root); // sonraki fonksiyon var mı bakılır
     }
 
     return is_control_true;
@@ -385,7 +385,7 @@ void size_sum(variable_s *v_root, function_s *f_root)
     }
     else
     {
-        printf("O(1)"); // sabit yer karmaşıklığı ise
+        printf("BİG-O Notasyonu: O(1)"); // sabit yer karmaşıklığı ise
     }
 }
 
@@ -434,7 +434,7 @@ char *size_sum_function(function_s *f_root)
 void big_O_calculator_for_size(char *big_O_text)
 {
     char big_o_temp[c_Size_s][c_Size_s];
-    memset(big_o_temp, NULL, c_Size_s);
+    memset(big_o_temp, NULL, 100);
     char *token = strtok(big_O_text, " "); // boşluklara göre böler
     int i = 0;
     int max_lenght = 0;
@@ -486,7 +486,7 @@ void find_complexity_function(int amount_call_func, function_s *f_root)
 
         strcat(f_root->complexity, "n");
     }
-    printf("%s", f_root->complexity);
+    printf("Zaman Karmaşıklığı;\nBİG-O Notasyonu: O(%s)\n\n", f_root->complexity);
 }
 /**
  * @brief Döngülerin karmaşıklığı ile rekürsif fonksiyonların karmaşıklığını kıyas eder.
