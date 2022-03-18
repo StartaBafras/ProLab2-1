@@ -84,12 +84,12 @@ int find_for(char text[][Size], loop_s *l_root)
             memset(l_raise_temp, NULL, c_Size_l);
             strcat(l_raise_temp, p_loop);
             memset(loop_condition, NULL, c_Size_l);
-            int k=0;
+            int k = 0;
 
             for (int j = 0; j < strlen(l_raise_temp); j++) // satırın içini gezer
 
             {
-                if ((l_raise_temp[j] == ';') || (l_raise_temp[j] == '<') || (l_raise_temp[j] == '>') || (l_raise_temp[j] == '=')|| (l_raise_temp[j] == '!'))
+                if ((l_raise_temp[j] == ';') || (l_raise_temp[j] == '<') || (l_raise_temp[j] == '>') || (l_raise_temp[j] == '=') || (l_raise_temp[j] == '!'))
                 {
                     break;
                 }
@@ -120,16 +120,16 @@ int find_for(char text[][Size], loop_s *l_root)
             line_loop_end = find_line_end(line_loop_start, text);
             // printf("--%s ---%s --%d  --%s--%d \n", name_loop, raise_loop, line_loop_start, loop_condition, line_loop_end);
             loop_s data;
-            data.dependent_variable=malloc(sizeof(variable_s_pointer));
-            data.dependent_variable->next=NULL;
-            data.dependent_variable->variable=NULL;
+            data.dependent_variable = malloc(sizeof(variable_s_pointer));
+            data.dependent_variable->next = NULL;
+            data.dependent_variable->variable = NULL;
             data.kind = v_FOR;
             memset(data.condition, NULL, c_Size_s);
             strcat(data.condition, loop_condition);
             data.start_end_line[0] = line_loop_start;
             data.start_end_line[1] = line_loop_end;
             data.id = 0;
-             data.complexity=NULL;
+            data.complexity = NULL;
             add_loop(&data, l_root);
         }
     }
@@ -200,9 +200,9 @@ int find_while(char text[][Size], loop_s *l_root)
 
             //  printf("--%s  --%d  --%s--%d \n", name_loop, line_loop_start, loop_condition, line_loop_end);
             loop_s data;
-            data.dependent_variable=malloc(sizeof(variable_s_pointer));
-            data.dependent_variable->next=NULL;
-            data.dependent_variable->variable=NULL;
+            data.dependent_variable = malloc(sizeof(variable_s_pointer));
+            data.dependent_variable->next = NULL;
+            data.dependent_variable->variable = NULL;
             if (NULL != strstr(name_loop, "do"))
             {
                 data.kind = V_WHILE_DO;
@@ -216,8 +216,8 @@ int find_while(char text[][Size], loop_s *l_root)
             data.start_end_line[0] = line_loop_start;
             data.start_end_line[1] = line_loop_end;
             data.id = 0;
-            data.complexity=NULL;
-        
+            data.complexity = NULL;
+
             add_loop(&data, l_root);
         }
     }
@@ -328,23 +328,24 @@ int research_variable_connect_loop_different_line(variable_s *v_root, loop_s *l_
 }
 
 /**
- * @brief Verilen döngünün koşulunun bağlı olduğu değişkeni değişkenler bağlı listesinde bulur 
+ * @brief Verilen döngünün koşulunun bağlı olduğu değişkeni değişkenler bağlı listesinde bulur
  * ve döngünün yapısına bağlar.
- * 
+ *
  * @param variable Döngünün bağlı olduğu değişkenin ismi.
  * @param variable_line Değişkenin bulunduğu satır.
  * @param v_root Değişken bağlı listesini işaret eden kök işaretçisi.
  * @param loop_struct İşlem yapılacak döngüyü işaret eden işaretçi.
- * 
+ *
  * @return 0: İşlem Tamamlandı
  */
 int add_variable_in_loop(char *variable, int variable_line, variable_s *v_root, loop_s *loop_struct)
 {
-    variable_s *new_v = search_variable(variable,variable_line,v_root);
+    variable_s *new_v = search_variable(variable, variable_line, v_root);
 
-    if(new_v == NULL) return -1;
+    if (new_v == NULL)
+        return -1;
 
-    if(loop_struct->dependent_variable->variable == NULL)
+    if (loop_struct->dependent_variable->variable == NULL)
     {
         loop_struct->dependent_variable->variable = new_v;
         return 0;
@@ -354,13 +355,122 @@ int add_variable_in_loop(char *variable, int variable_line, variable_s *v_root, 
 
     new_p = loop_struct->dependent_variable;
 
-    while (new_p->next != NULL) new_p = new_p->next;
-    
+    while (new_p->next != NULL)
+        new_p = new_p->next;
+
     new_p->next = malloc(sizeof(variable_s_pointer));
 
     new_p->next->variable = new_v;
     new_p->next->next = NULL;
 
     return 0;
+}
 
+/**
+ *@brief döngü struct'ını alır ve içinde gezinir.
+ * Amaç iç içe döngüleri tespit etmek.
+ *
+ * @param l_root Döngü struct'ın rootunu alır
+ * */
+void find_loop_complexity(loop_s *l_root)
+{
+    int lines_and_increase_arr[c_Size_l][3];
+    int complexity_arr[c_Size_l][c_Size_s];
+    memset(complexity_arr, NULL, c_Size_l * c_Size_s);
+
+    int complexity_index = 0;
+    int i = 0;
+
+    while ((l_root != NULL) && (l_root->start_end_line != 0))
+    {
+
+        lines_and_increase_arr[i][0] = l_root->start_end_line[0];
+        lines_and_increase_arr[i][1] = l_root->start_end_line[1];
+        lines_and_increase_arr[i][2] = l_root->dependent_variable->variable->increase_rate;
+
+        if (l_root->next != NULL)
+        {
+            l_root = l_root->next;
+            i++;
+        }
+        else
+        {
+            break;
+        }
+    }
+    int m = 0;
+    for (int j = 0; j < i + 1; j++, m++)
+    {
+        int l = 0;
+        for (int k = 0; k < i + 1; k++)
+        {
+
+            if ((lines_and_increase_arr[k][0] > lines_and_increase_arr[j][0]) && (lines_and_increase_arr[k][1] < lines_and_increase_arr[j][1]))
+            {
+                if ((lines_and_increase_arr[k][0] > lines_and_increase_arr[k - 1][0]) && (lines_and_increase_arr[k][1] < lines_and_increase_arr[k - 1][1]))
+                {
+                    complexity_arr[m][0] = lines_and_increase_arr[j][2];
+                    complexity_arr[m][l + 1] = lines_and_increase_arr[k][2];
+                    l++;
+                }
+                else
+                {
+                    m++;
+                    l = 0;
+                    complexity_arr[m][0] = lines_and_increase_arr[j][2];
+                    complexity_arr[m][l + 1] = lines_and_increase_arr[k][2];
+                    l++;
+                }
+            }
+        }
+    }
+    int max_lenght_N = 0;
+    int max_lenght_logN = 0;
+    for (int k = 0; k < 10; k++)
+    {
+        int N_count = 0;
+        int lonG_count = 0;
+        for (int j = 0; j < i; j++)
+        {
+            if ((1 == complexity_arr[k][j]) || (2 == complexity_arr[k][j]))
+            {
+                N_count++;
+            }
+            else if ((2 < complexity_arr[k][j]) && (7 > complexity_arr[k][j]))
+            {
+                lonG_count++;
+            }
+
+            if (max_lenght_N < N_count)
+            {
+                max_lenght_logN = lonG_count;
+                max_lenght_N = N_count;
+                complexity_index = k;
+            }
+            if (max_lenght_N == N_count)
+            {
+
+                if (lonG_count > max_lenght_logN)
+                {
+                    max_lenght_logN = lonG_count;
+                    complexity_index = k;
+                    max_lenght_N = N_count;
+                }
+            }
+        }
+    }
+    char complexity_string[6][c_Size_s] = {"n", "n", "logN", "logN", "logN", "logN"};
+    printf("\n");
+    for (int j = 0; j < c_Size_s; j++)
+    {
+        for (int k = 1; k <= 6; k++)
+        {
+            if (complexity_arr[complexity_index][j] == k)
+            {
+                printf("%s", complexity_string[k - 1]);
+            }
+        }
+    }
+
+    printf("\n");
 }

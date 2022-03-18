@@ -55,4 +55,6 @@ int find_line_end(int line_start, char text[][Size]); // iç içe for bulur
 
 int add_variable_in_loop(char *veriable, int variable_line, variable_s *v_root, loop_s *loop_struct);
 
+void find_loop_complexity(loop_s *l_root);
+
 #endif

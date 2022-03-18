@@ -74,7 +74,7 @@ int main(void)
 
     while(1)
     {
-        add_variable_in_loop(variable_loop_connect->condition,11,v_root,variable_loop_connect);
+        add_variable_in_loop(variable_loop_connect->condition,150,v_root,variable_loop_connect);
 
         if(variable_loop_connect->next == NULL) break;
         else variable_loop_connect = variable_loop_connect->next;
@@ -82,7 +82,7 @@ int main(void)
 
     
 
-
+find_loop_complexity(l_root);
 
 
 
