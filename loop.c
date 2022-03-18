@@ -464,7 +464,7 @@ int find_loop_complexity(loop_s *l_root, int true)
     {
 
         char complexity_string[6][c_Size_s] = {"n", "n", "logN", "logN", "logN", "logN"};
-        printf("\n");
+        printf("\n\nZaman karmaşıklığı;\nBİG-O Notasyonu: O(");
         for (int j = 0; j < c_Size_s; j++)
         {
             for (int k = 1; k <= 6; k++)
@@ -476,7 +476,7 @@ int find_loop_complexity(loop_s *l_root, int true)
             }
         }
 
-        printf("\n");
+        printf(")\n\n");
     }
     return max_lenght_N;
 }
