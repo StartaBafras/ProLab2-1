@@ -8,7 +8,7 @@ int write_function_data(function_s *data, function_s *function_root)
 {
     function_root->amount_call = data->amount_call;
     function_root->call_line = data->call_line;
-    function_root->complexity = data->complexity;
+    strcat(function_root->complexity, data->complexity);
     function_root->function_inside = data->function_inside;
     function_root->loops_inside = data->loops_inside;
     strcpy(function_root->name, data->name);
@@ -16,6 +16,8 @@ int write_function_data(function_s *data, function_s *function_root)
     function_root->start_end_line[1] = data->start_end_line[1];
     function_root->next = NULL;
     memset(function_root->size, NULL, 20);
+    memset(function_root->complexity, NULL, c_Size_s);
+
     // printf("%s--%d--%d\n",data->name,data->start_end_line[0],data->start_end_line[1]);
 }
 
@@ -167,7 +169,7 @@ int find_variables(char text[][Size], variable_s *root, function_s *f_root)
                         strcat(data.name, var_name);
                         data.amount_call = NULL;
                         data.call_line = NULL;
-                        data.complexity = NULL;
+                        memset(data.complexity, NULL, c_Size_s);
                         memset(data.size, NULL, 20);
                         add_function(&data, f_root);
 
@@ -314,7 +316,8 @@ int find_recursive_in_text(char text[][Size], function_s *f_root, variable_s *v_
     f_root->call_line = call_line_func;
     if (amount_call_func != 0) // eğer sıfırdan farklı ise rekürsiftir
     {
-        find_size_function(amount_call_func, f_root);
+        find_complexity_function(amount_call_func, f_root);
+        find_size_function(f_root);
         find_size(v_root, f_root->start_end_line[0], f_root->start_end_line[1]);
         return 0;
     }
@@ -322,17 +325,15 @@ int find_recursive_in_text(char text[][Size], function_s *f_root, variable_s *v_
 }
 
 /**
- * @brief Fonksiyonun çağrılma miktarını alır ve fonsiyonun size'na
- *  çağrılma miktarı kadar n kopyalar bu n yer karmaşıklığını temsil eder.
+ * @brief Fonksiyonunsize'na n kopyalar bu n yer karmaşıklığını temsil eder.
  *
- * @param amount_call_func Fonksiyonun çağrılma miktarını alır.
  *
  * @param f_root Fonsiyon struct'ın kökünü alır.
  */
-void find_size_function(int amount_call_func, function_s *f_root)
+void find_size_function(function_s *f_root)
 {
     memset(f_root->size, NULL, 20);
-    for (int i = 0; i < amount_call_func; i++)
+    for (int i = 0; i < 1; i++)
     {
         strcat(f_root->size, "n");
     }
@@ -380,11 +381,11 @@ void size_sum(variable_s *v_root, function_s *f_root)
     printf("\nYer Karmaşıklığı: %s %d\n", sum_char, sum_int);
     if (sum_char[0] != '\0')
     {
-        big_O_calculator_for_size(sum_char);//eğer sabit yer karmaşıklığı değilse fonksiyon çağrılır.
+        big_O_calculator_for_size(sum_char); // eğer sabit yer karmaşıklığı değilse fonksiyon çağrılır.
     }
     else
     {
-        printf("O(1)");//sabit yer karmaşıklığı ise
+        printf("O(1)"); // sabit yer karmaşıklığı ise
     }
 }
 
@@ -428,16 +429,16 @@ char *size_sum_function(function_s *f_root)
  *Strtok kullanarak boşluklardan böler.
  *Böldüğü stringlerin hangisi uzun ise onu seçer ve sadece harfleri bastırır.
  *  @param  big_O_text yer karmaşıklığının olduğu string'i alır.
- * 
+ *
  */
 void big_O_calculator_for_size(char *big_O_text)
 {
     char big_o_temp[c_Size_s][c_Size_s];
     memset(big_o_temp, NULL, c_Size_s);
-    char *token = strtok(big_O_text, " ");//boşluklara göre böler
+    char *token = strtok(big_O_text, " "); // boşluklara göre böler
     int i = 0;
     int max_lenght = 0;
-    int big_O_index=0;
+    int big_O_index = 0;
     while (token != NULL)
     {
 
@@ -446,21 +447,45 @@ void big_O_calculator_for_size(char *big_O_text)
         if (max_lenght < strlen(big_o_temp[i]))
         {
             max_lenght = strlen(big_o_temp[i]);
-            big_O_index=i;
+            big_O_index = i;
         }
         i++;
 
-    //printf(" %s\n", token);
-    token = strtok(NULL, " ");
+        // printf(" %s\n", token);
+        token = strtok(NULL, " ");
     }
-     printf("BİG-O Notasyonu: O(");
-    for (int j = 0; j <strlen(big_o_temp[big_O_index]); j++)
+    printf("BİG-O Notasyonu: O(");
+    for (int j = 0; j < strlen(big_o_temp[big_O_index]); j++)
     {
-        if ('A'<=big_o_temp[big_O_index][j])
+        if ('A' <= big_o_temp[big_O_index][j])
         {
-            printf("%c",big_o_temp[big_O_index][j]);
+            printf("%c", big_o_temp[big_O_index][j]);
         }
-        
     }
     printf(")\n\n");
+}
+
+/**
+ * @brief Fonksiyonun çağrılma miktarını alır ve fonsiyonun zaman karmaşıklığını hesaplar.
+ *
+ *
+ * @param amount_call_func Fonksiyonun çağrılma miktarını alır.
+ *
+ * @param f_root Fonsiyon struct'ın kökünü alır.
+ */
+void find_complexity_function(int amount_call_func, function_s *f_root)
+{
+    memset(f_root->complexity, NULL, 20);
+    if (1!=amount_call_func)
+    {
+     f_root->complexity[0] = amount_call_func + '0';
+    strcat(f_root->complexity, "^n");
+    
+    }else{
+
+       strcat(f_root->complexity, "n");
+
+    }
+    printf("%s",f_root->complexity);
+  
 }

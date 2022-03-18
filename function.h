@@ -10,7 +10,7 @@ typedef struct function_s
     int start_end_line[2];
     loop_s_pointer *loops_inside;
     struct function_s_pointer *function_inside;
-    int complexity;
+    char complexity[c_Size_s];
     int amount_call;
     int call_line;
     char size[20];
@@ -39,12 +39,14 @@ int find_recursive_in_struct(char text[][Size],function_s *f_root,variable_s *v_
 
 int find_recursive_in_text(char text[][Size], function_s *f_root,variable_s *v_root);
 
-void find_size_function(int amount_call_func,function_s *f_root);
+void find_size_function(function_s *f_root);
 
 void size_sum(variable_s *v_root,function_s *f_root);
 
 char *size_sum_function(function_s *f_root);
 
 void big_O_calculator_for_size(char *big_O_text);
+
+void find_complexity_function(int amount_call_func, function_s *f_root);
 
 #endif
