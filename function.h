@@ -35,7 +35,7 @@ int write_function_data(function_s *data, function_s *function_root);
 
 int find_variables(char text[][Size], variable_s *root,function_s *f_root); // değişken türünü ismini yerini bulur
 
-int find_recursive_in_struct(char text[][Size],function_s *f_root,variable_s *v_root);
+int find_recursive_in_struct(char text[][Size],function_s *f_root,variable_s  *v_root);
 
 int find_recursive_in_text(char text[][Size], function_s *f_root,variable_s *v_root);
 
@@ -48,5 +48,7 @@ char *size_sum_function(function_s *f_root);
 void big_O_calculator_for_size(char *big_O_text);
 
 void find_complexity_function(int amount_call_func, function_s *f_root);
+
+int find_max_complexity(function_s *f_root, loop_s *l_root);
 
 #endif

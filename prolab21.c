@@ -80,9 +80,7 @@ int main(void)
         else variable_loop_connect = variable_loop_connect->next;
     }
 
-    
-
-find_loop_complexity(l_root);
+ find_max_complexity(f_root,l_root);
 
 
 

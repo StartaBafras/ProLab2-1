@@ -372,7 +372,7 @@ int add_variable_in_loop(char *variable, int variable_line, variable_s *v_root, 
  *
  * @param l_root Döngü struct'ın rootunu alır
  * */
-void find_loop_complexity(loop_s *l_root)
+int find_loop_complexity(loop_s *l_root, int true)
 {
     int lines_and_increase_arr[c_Size_l][3];
     int complexity_arr[c_Size_l][c_Size_s];
@@ -459,18 +459,24 @@ void find_loop_complexity(loop_s *l_root)
             }
         }
     }
-    char complexity_string[6][c_Size_s] = {"n", "n", "logN", "logN", "logN", "logN"};
-    printf("\n");
-    for (int j = 0; j < c_Size_s; j++)
+
+    if (true == 1)
     {
-        for (int k = 1; k <= 6; k++)
+
+        char complexity_string[6][c_Size_s] = {"n", "n", "logN", "logN", "logN", "logN"};
+        printf("\n");
+        for (int j = 0; j < c_Size_s; j++)
         {
-            if (complexity_arr[complexity_index][j] == k)
+            for (int k = 1; k <= 6; k++)
             {
-                printf("%s", complexity_string[k - 1]);
+                if (complexity_arr[complexity_index][j] == k)
+                {
+                    printf("%s", complexity_string[k - 1]);
+                }
             }
         }
-    }
 
-    printf("\n");
+        printf("\n");
+    }
+    return max_lenght_N;
 }

@@ -247,7 +247,7 @@ int find_variables(char text[][Size], variable_s *root, function_s *f_root)
  *
  * @param f_root fonksiyon struct'ın rootunu alır
  * */
-int find_recursive_in_struct(char text[][Size], function_s *f_root, variable_s *v_root) // struct'ta fonksiyonları gezer
+int find_recursive_in_struct(char text[][Size], function_s *f_root, variable_s *v_root ) // struct'ta fonksiyonları gezer
 {
 
     int is_control_true = 1;
@@ -316,7 +316,7 @@ int find_recursive_in_text(char text[][Size], function_s *f_root, variable_s *v_
     f_root->call_line = call_line_func;
     if (amount_call_func != 0) // eğer sıfırdan farklı ise rekürsiftir
     {
-        find_complexity_function(amount_call_func, f_root);
+
         find_size_function(f_root);
         find_size(v_root, f_root->start_end_line[0], f_root->start_end_line[1]);
         return 0;
@@ -476,16 +476,62 @@ void big_O_calculator_for_size(char *big_O_text)
 void find_complexity_function(int amount_call_func, function_s *f_root)
 {
     memset(f_root->complexity, NULL, 20);
-    if (1!=amount_call_func)
+    if (1 != amount_call_func)
     {
-     f_root->complexity[0] = amount_call_func + '0';
-    strcat(f_root->complexity, "^n");
-    
-    }else{
-
-       strcat(f_root->complexity, "n");
-
+        f_root->complexity[0] = amount_call_func + '0';
+        strcat(f_root->complexity, "^n");
     }
-    printf("%s",f_root->complexity);
-  
+    else
+    {
+
+        strcat(f_root->complexity, "n");
+    }
+    printf("%s", f_root->complexity);
+}
+/**
+ * @brief Döngülerin karmaşıklığı ile rekürsif fonksiyonların karmaşıklığını kıyas eder.
+ * 
+ * @param f_root Fonsiyon struct'ın kökünü alır.
+ * @param l_root Döngü struct'ın rootunu alır.
+ * 
+ */
+int find_max_complexity(function_s *f_root, loop_s *l_root)
+{
+    int max_complexity_lenght = 0;
+    int result_find_loop_complexity = 0;
+    while (f_root != NULL)
+    {
+        if (f_root->amount_call > max_complexity_lenght)
+        {
+            max_complexity_lenght = f_root->amount_call;
+        }
+        if (f_root->next != NULL)
+        {
+            f_root = f_root->next;
+        }
+        else
+        {
+            break;
+        }
+    }
+    if (max_complexity_lenght == 0)
+
+    {
+        find_loop_complexity(l_root, 1);
+    }
+    else
+    {
+
+        result_find_loop_complexity = find_loop_complexity(l_root, 0);
+        if (max_complexity_lenght > result_find_loop_complexity)
+        {
+
+            find_complexity_function(max_complexity_lenght, f_root);
+        }
+        else
+        {
+
+            find_loop_complexity(l_root, 1);
+        }
+    }
 }
