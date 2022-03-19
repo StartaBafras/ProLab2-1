@@ -480,7 +480,7 @@ int find_loop_complexity(loop_s *l_root, int true)
                 }
             }
         }
-        if (complexity_arr[0][0]=='\0')
+        if ((complexity_arr[0][0]=='\0')&&(max_lenght_N==0)&&(max_lenght_logN==0))
         {
             printf("1");
         }
