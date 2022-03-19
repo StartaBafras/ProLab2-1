@@ -40,8 +40,8 @@ int find_char(char *message, char c, int size)
 int find_increase_case1(char *message, int size, int line,variable_s *v_root)
 {
     int error= 0;
-    clear_special_character(message,sizeof(message),'+',' ');
-    clear_special_character(message,sizeof(message),'-',' ');
+    message = mesclear_special_character(message,sizeof(message),'+',' ');
+    message = clear_special_character(message,sizeof(message),'-',' ');
     error = find_char(message, '+', size);
     if(error != -1)
     {
@@ -276,7 +276,7 @@ int calculate_compexity(char *d_m[],int begin_index, int end_index, variable_s *
  * @param old_character Değiştirilmesi istenen karakter.
  * @param new_character Eski karakterle değiştirilecek karakter.
  */
-int clear_special_character(char *message,int size, char old_character, char new_character)
+char *clear_special_character(char *message,int size, char old_character, char new_character)
 {
     for(int i=0; i<size; i++)
     {
@@ -285,6 +285,7 @@ int clear_special_character(char *message,int size, char old_character, char new
             message[i] = new_character;
         }
     }
+    return message;
 }
 
 
