@@ -59,8 +59,8 @@ int main(void)
     int c = 0;
     for (int i = 0; i < 150; i++)
     {
-        c = find_increase_case1(read_txt[i], 150, i, v_root);
-        c = find_increase_case2(read_txt[i], sizeof(read_txt[i]), i, v_root);
+        c = find_increase_case1(read_txt[i], strlen(read_txt[i]), i, v_root);
+        c = find_increase_case2(read_txt[i], strlen(read_txt[i]), i, v_root);
     }
 
     int error = 0;
