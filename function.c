@@ -250,7 +250,8 @@ int find_variables(char text[][Size], variable_s *root, function_s *f_root)
 int find_recursive_in_struct(char text[][Size], function_s *f_root, variable_s *v_root) // struct'ta fonksiyonları gezer
 {
 
-    int is_control_true = 1;
+  int is_control_true = 1;
+  int is_control_false=1;
 
     if (f_root != NULL)
     {
@@ -259,10 +260,10 @@ int find_recursive_in_struct(char text[][Size], function_s *f_root, variable_s *
 
     if (f_root->next != NULL)
     {
-        is_control_true = find_recursive_in_struct(text, f_root->next, v_root); // sonraki fonksiyon var mı bakılır
+        is_control_false = find_recursive_in_struct(text, f_root->next, v_root); // sonraki fonksiyon var mı bakılır
     }
 
-    return is_control_true;
+    return is_control_true*is_control_false;
 }
 
 /**
