@@ -83,7 +83,7 @@ char* detect_variable(char *message, int location, int size)
 
     for(int i=location; i<size; i++)
     {
-        if( message[i] != ';' && message[i] != ' ' && message[i] != ',' && message[i] != '\0' && message[i] != ')' && message[i] != '('  )
+        if( message[i] != ';' && message[i] != ' ' && message[i] != ',' && message[i] != '\0' && message[i] != ')' && message[i] != '(' && message[i] != '*' && message[i] != '/' )
         {
             end++;
         }
