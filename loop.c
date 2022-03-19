@@ -190,6 +190,7 @@ int find_while(char text[][Size], loop_s *l_root)
             p_loop = strtok(p_loop, ">");
             p_loop = strtok(p_loop, "=");
             p_loop = strtok(p_loop, "!");
+            p_loop=strtok(p_loop," ");
             memset(loop_condition, NULL, c_Size_l);
             strcat(loop_condition, p_loop);
             if (line_loop_end == line_loop_start)
