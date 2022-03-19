@@ -171,6 +171,9 @@ int find_variables(char text[][Size], variable_s *root, function_s *f_root)
                         data.call_line = NULL;
                         memset(data.complexity, NULL, c_Size_s);
                         memset(data.size, NULL, 20);
+                        data.loops_inside = malloc(sizeof(loop_s_pointer));
+                        data.loops_inside->next = NULL;
+                        data.loops_inside->loop = NULL;
                         add_function(&data, f_root);
 
                         //   printf("func;%s --%s--%d--%d\n", var_kind, var_name, var_line, func_line_end);
@@ -250,8 +253,8 @@ int find_variables(char text[][Size], variable_s *root, function_s *f_root)
 int find_recursive_in_struct(char text[][Size], function_s *f_root, variable_s *v_root) // struct'ta fonksiyonları gezer
 {
 
-  int is_control_true = 1;
-  int is_control_false=1;
+    int is_control_true = 1;
+    int is_control_false = 1;
 
     if (f_root != NULL)
     {
@@ -263,7 +266,7 @@ int find_recursive_in_struct(char text[][Size], function_s *f_root, variable_s *
         is_control_false = find_recursive_in_struct(text, f_root->next, v_root); // sonraki fonksiyon var mı bakılır
     }
 
-    return is_control_true*is_control_false;
+    return is_control_true * is_control_false;
 }
 
 /**
@@ -347,11 +350,11 @@ void find_size_function(function_s *f_root)
  *
  * @param f_root fonksiyona bağlı struct'ı işaret eden kök işaretçisi.
  */
-void size_sum(variable_s *v_root, function_s *f_root,int number_index)
+void size_sum(variable_s *v_root, function_s *f_root, int number_index)
 {
     int sum_int = 0; // toplam boyutu tutar
     char size_temp[c_Size_s];
-    memset(size_temp,NULL,c_Size_s);
+    memset(size_temp, NULL, c_Size_s);
     char sum_char[c_Size_l];
     memset(sum_char, NULL, c_Size_l);
     while (v_root != NULL)
@@ -361,12 +364,13 @@ void size_sum(variable_s *v_root, function_s *f_root,int number_index)
 
             if (NULL != strstr(v_root->size, "n"))
             {
-                
+
                 strcat(sum_char, v_root->size);
                 strcat(sum_char, " ");
             }
             else
-            {   size_temp[0]=v_root->size[number_index];
+            {
+                size_temp[0] = v_root->size[number_index];
 
                 sum_int += atoi(size_temp);
             }
