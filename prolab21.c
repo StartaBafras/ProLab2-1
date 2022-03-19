@@ -24,7 +24,6 @@ int main(void)
     loop_s *l_root = malloc(sizeof(loop_s));
     function_s *f_root = malloc(sizeof(function_s));
 
-
     char read_txt[Size][Size]; // dosya içeriği
 
     FILE *dosya = fopen("question.txt", "r");
@@ -47,44 +46,47 @@ int main(void)
         }
     }
 
-    find_variables(read_txt, v_root,f_root);
+    find_variables(read_txt, v_root, f_root);
     find_for(read_txt, l_root);
     find_while(read_txt, l_root);
     connect_loop_and_variable(v_root, l_root);
-    int result=find_recursive_in_struct(read_txt,f_root,v_root);
-    if (result==1)
+    int result = find_recursive_in_struct(read_txt, f_root, v_root);
+    if (result == 1)
     {
-      find_size(v_root, Size, 0);
+        find_size(v_root, Size, 0);
     }
-  
-    size_sum(v_root,f_root,recursive_counter(f_root)-1);
+    int recursive_amount = recursive_counter(f_root);
+    if (recursive_amount == 0)
+    {
+        size_sum(v_root, f_root, 0);
+    }
+    else
+    {
 
-
+        size_sum(v_root, f_root, recursive_amount - 1);
+    }
     int c = 0;
     for (int i = 0; i < 150; i++)
     {
-        c = find_increase_case1(read_txt[i],150,i,v_root);
-        c = find_increase_case2(read_txt[i],sizeof(read_txt[i]),i,v_root);
+        c = find_increase_case1(read_txt[i], 150, i, v_root);
+        c = find_increase_case2(read_txt[i], sizeof(read_txt[i]), i, v_root);
     }
-
 
     int error = 0;
 
     loop_s *variable_loop_connect = l_root;
 
-
-    while(1)
+    while (1)
     {
-        add_variable_in_loop(variable_loop_connect->condition,150,v_root,variable_loop_connect);
+        add_variable_in_loop(variable_loop_connect->condition, 150, v_root, variable_loop_connect);
 
-        if(variable_loop_connect->next == NULL) break;
-        else variable_loop_connect = variable_loop_connect->next;
+        if (variable_loop_connect->next == NULL)
+            break;
+        else
+            variable_loop_connect = variable_loop_connect->next;
     }
 
- find_max_complexity(f_root,l_root);
-
-
-
+    find_max_complexity(f_root, l_root);
 
     if (0 != error)
     {
