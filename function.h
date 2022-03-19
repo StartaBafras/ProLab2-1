@@ -27,7 +27,7 @@ typedef struct function_s_pointer
 
 loop_s* search_loop(int begin_line, loop_s *root);
 
-int add_loop_in_function(function_s *function_struct, int loop_begin_line, loop_s *root);
+int add_loop_in_function(function_s *f_root, loop_s *l_root);
 
 int add_function(function_s *data, function_s *function_root);
 

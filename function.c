@@ -45,27 +45,41 @@ int add_function(function_s *data, function_s *function_root)
  * @param loop_begin_line Eklenecek döngünün başlangıç satırı.
  * @param root Döngü bağlı listesini işaret eden kök işaretçisi.
  */
-int add_loop_in_function(function_s *function_struct, int loop_begin_line, loop_s *root)
+int add_loop_in_function(function_s *f_root, loop_s *l_root)
 {
-
-    if (function_struct->loops_inside->loop == NULL)
+    loop_s *iter = l_root;
+    loop_s_pointer *l_p = f_root->loops_inside;
+    while(1)
     {
-        function_struct->loops_inside->loop = search_loop(loop_begin_line, root);
-        function_struct->loops_inside->next = NULL;
-        return 0;
+        while (1)
+        {
+            if(f_root->start_end_line[0] <= iter->start_end_line[0] && f_root->start_end_line[1] >= iter->start_end_line[1])
+            {
+                if(f_root->loops_inside->loop == NULL)
+                {
+                    f_root->loops_inside->loop = iter;
+                }
+                else
+                {
+                    while (l_p->next != NULL)
+                    {
+                        l_p = l_p->next;
+                    }
+                    
+                    loop_s_pointer *new = malloc(sizeof(loop_s_pointer));
+                    new->loop = iter;
+                    new->next = NULL;
+                    l_p->next = new;
+                }
+            }
+            if(iter->next == NULL) break;
+            iter = iter->next;
+            
+        }
+
+        if(f_root->next == NULL) break;
+        f_root = f_root->next;
     }
-
-    loop_s_pointer *p = function_struct->loops_inside;
-
-    while (p->next != NULL)
-        p = p->next;
-
-    loop_s_pointer *new = malloc(sizeof(loop_s_pointer));
-    new->loop = search_loop(loop_begin_line, root);
-    new->next = NULL;
-    p->next = new;
-
-    return 0;
 }
 
 /**
