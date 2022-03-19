@@ -40,7 +40,7 @@ int find_char(char *message, char c, int size)
 int find_increase_case1(char *message, int size, int line,variable_s *v_root)
 {
     int error= 0;
-    message = mesclear_special_character(message,sizeof(message),'+',' ');
+    message = clear_special_character(message,sizeof(message),'+',' ');
     message = clear_special_character(message,sizeof(message),'-',' ');
     error = find_char(message, '+', size);
     if(error != -1)
