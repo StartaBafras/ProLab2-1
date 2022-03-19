@@ -8,15 +8,6 @@
 #include "function.h"
 #include "increase.h"
 
-int toplam(int dizi[], int n)
-{
-    int x = 0;
-    for (int i = 0; i < n; i++)
-    {
-        x = x + dizi[i];
-    }
-    return x;
-}
 
 int main(void)
 {
@@ -89,7 +80,8 @@ int main(void)
     find_max_complexity(f_root, l_root);
 
     add_loop_in_function(f_root,l_root);
-    
+
+
     if (0 != error)
     {
         printf("Kod Hatalı Derlenemedi.");
