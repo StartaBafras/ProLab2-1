@@ -22,7 +22,7 @@ int sentence_divider(char *message_p[],char *message, int word);
 
 int find_complex_increase(char *message, int size, int line_number, variable_s *root);
 
-int clear_comma(char *message,int size);
+int clear_special_character(char *message,int size, char old_character, char new_character);
 
 char* detect_variable(char *message, int location, int size);
 

@@ -40,7 +40,8 @@ int find_char(char *message, char c, int size)
 int find_increase_case1(char *message, int size, int line,variable_s *v_root)
 {
     int error= 0;
- 
+    clear_special_character(message,sizeof(message),'+',' ');
+    clear_special_character(message,sizeof(message),'-',' ');
     error = find_char(message, '+', size);
     if(error != -1)
     {
@@ -268,17 +269,20 @@ int calculate_compexity(char *d_m[],int begin_index, int end_index, variable_s *
 
 
 /**
- * @brief Alınan mesajın içindeki virgül karekterlerini boşluk olarak değiştirir.
+ * @brief Alınan mesajın içindeki istenen karakteri başak bir karakter ile değiştirmeye yarar.
+ * 
  * @param message Karakterleri içeren dizi.
  * @param size Dizinin boyutu.
+ * @param old_character Değiştirilmesi istenen karakter.
+ * @param new_character Eski karakterle değiştirilecek karakter.
  */
-int clear_comma(char *message,int size)
+int clear_special_character(char *message,int size, char old_character, char new_character)
 {
     for(int i=0; i<size; i++)
     {
-        if(message[i] == ',')
+        if(message[i] == old_character && (message[i+1] != old_character &&  message[i-1] != old_character))
         {
-            message[i] = ' ';
+            message[i] = new_character;
         }
     }
 }
@@ -315,3 +319,4 @@ int sentence_divider(char *message_p[],char *message, int word)
 
     return 0;
 }
+
