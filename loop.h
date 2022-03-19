@@ -24,7 +24,7 @@ typedef struct loop_s
 typedef struct loop_s_pointer
 {
     loop_s *loop; 
-    loop_s *next;
+    struct loop_s_pointer *next;
 }loop_s_pointer;
 
 
