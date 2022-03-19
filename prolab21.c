@@ -88,6 +88,8 @@ int main(void)
 
     find_max_complexity(f_root, l_root);
 
+    add_loop_in_function(f_root,l_root);
+    
     if (0 != error)
     {
         printf("Kod Hatalı Derlenemedi.");
