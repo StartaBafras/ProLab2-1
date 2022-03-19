@@ -381,7 +381,7 @@ int find_loop_complexity(loop_s *l_root, int true)
     int complexity_index = 0;
     int i = 0;
 
-    while ((l_root != NULL) && (l_root->start_end_line != 0))
+    while ((l_root != NULL) && (l_root->start_end_line[0] != 0))
     {
 
         lines_and_increase_arr[i][0] = l_root->start_end_line[0];
@@ -475,7 +475,11 @@ int find_loop_complexity(loop_s *l_root, int true)
                 }
             }
         }
-
+        if ((max_lenght_logN==0)&&(max_lenght_N==0))
+        {
+         printf("1");
+        }
+        
         printf(")\n\n");
     }
     return max_lenght_N;
