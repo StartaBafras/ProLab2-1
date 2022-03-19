@@ -395,6 +395,10 @@ int find_loop_complexity(loop_s *l_root, int true)
         }
         else
         {
+            if (i == 0)
+            {
+                complexity_arr[0][0] = lines_and_increase_arr[0][2];
+            }
             break;
         }
     }
@@ -475,11 +479,11 @@ int find_loop_complexity(loop_s *l_root, int true)
                 }
             }
         }
-        if ((max_lenght_logN==0)&&(max_lenght_N==0))
+        if (complexity_arr[0][0]=='\0')
         {
-         printf("1");
+            printf("1");
         }
-        
+
         printf(")\n\n");
     }
     return max_lenght_N;
