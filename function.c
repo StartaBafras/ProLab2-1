@@ -247,7 +247,7 @@ int find_variables(char text[][Size], variable_s *root, function_s *f_root)
  *
  * @param f_root fonksiyon struct'ın rootunu alır
  * */
-int find_recursive_in_struct(char text[][Size], function_s *f_root, variable_s *v_root ) // struct'ta fonksiyonları gezer
+int find_recursive_in_struct(char text[][Size], function_s *f_root, variable_s *v_root) // struct'ta fonksiyonları gezer
 {
 
     int is_control_true = 1;
@@ -259,7 +259,7 @@ int find_recursive_in_struct(char text[][Size], function_s *f_root, variable_s *
 
     if (f_root->next != NULL)
     {
-      is_control_true=  find_recursive_in_struct(text, f_root->next, v_root); // sonraki fonksiyon var mı bakılır
+        is_control_true = find_recursive_in_struct(text, f_root->next, v_root); // sonraki fonksiyon var mı bakılır
     }
 
     return is_control_true;
@@ -346,9 +346,11 @@ void find_size_function(function_s *f_root)
  *
  * @param f_root fonksiyona bağlı struct'ı işaret eden kök işaretçisi.
  */
-void size_sum(variable_s *v_root, function_s *f_root)
+void size_sum(variable_s *v_root, function_s *f_root,int number_index)
 {
     int sum_int = 0; // toplam boyutu tutar
+    char size_temp[c_Size_s];
+    memset(size_temp,NULL,c_Size_s);
     char sum_char[c_Size_l];
     memset(sum_char, NULL, c_Size_l);
     while (v_root != NULL)
@@ -358,13 +360,14 @@ void size_sum(variable_s *v_root, function_s *f_root)
 
             if (NULL != strstr(v_root->size, "n"))
             {
+                
                 strcat(sum_char, v_root->size);
                 strcat(sum_char, " ");
             }
             else
-            {
+            {   size_temp[0]=v_root->size[number_index];
 
-                sum_int += atoi(v_root->size);
+                sum_int += atoi(size_temp);
             }
         }
         if (v_root->next != NULL)
@@ -490,10 +493,10 @@ void find_complexity_function(int amount_call_func, function_s *f_root)
 }
 /**
  * @brief Döngülerin karmaşıklığı ile rekürsif fonksiyonların karmaşıklığını kıyas eder.
- * 
+ *
  * @param f_root Fonsiyon struct'ın kökünü alır.
  * @param l_root Döngü struct'ın rootunu alır.
- * 
+ *
  */
 int find_max_complexity(function_s *f_root, loop_s *l_root)
 {
@@ -534,4 +537,31 @@ int find_max_complexity(function_s *f_root, loop_s *l_root)
             find_loop_complexity(l_root, 1);
         }
     }
+}
+/**
+ * @brief Kaç tane rekürsif fonksiyon var bulur ve döndürür.
+ *
+ * @param f_root Fonsiyon struct'ın kökünü alır.
+ *
+ */
+int recursive_counter(function_s *f_root)
+{
+    int recursive_count = 0;
+    while (f_root != NULL)
+    {
+        if (f_root->amount_call > 0)
+        {
+            recursive_count++;
+        }
+        if (f_root->next != NULL)
+        {
+            f_root = f_root->next;
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    return recursive_count;
 }

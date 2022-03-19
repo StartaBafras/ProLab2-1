@@ -41,7 +41,7 @@ int find_recursive_in_text(char text[][Size], function_s *f_root,variable_s *v_r
 
 void find_size_function(function_s *f_root);
 
-void size_sum(variable_s *v_root,function_s *f_root);
+void size_sum(variable_s *v_root,function_s *f_root,int number_index);
 
 char *size_sum_function(function_s *f_root);
 
@@ -50,5 +50,7 @@ void big_O_calculator_for_size(char *big_O_text);
 void find_complexity_function(int amount_call_func, function_s *f_root);
 
 int find_max_complexity(function_s *f_root, loop_s *l_root);
+
+int recursive_counter(function_s *f_root);
 
 #endif

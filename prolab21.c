@@ -56,7 +56,8 @@ int main(void)
     {
       find_size(v_root, Size, 0);
     }
-    size_sum(v_root,f_root);
+  
+    size_sum(v_root,f_root,recursive_counter(f_root)-1);
 
 
     int c = 0;
