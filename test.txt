@@ -324,4 +324,29 @@ BİG-O Notasyonu: O(logNn)
 
 
 
-//  TEST 10
+//        TEST 11
+
+
+#include<stdio.h>
+
+include
+int binarySearch(int array[], int x, int low, int high) {
+  while (low <= high) {
+    int mid = low + (high - low) / 2;
+
+    if (array[mid] == x)
+      return mid;
+
+    if (array[mid] < x)
+      low = mid + 1;
+
+    else
+      high = mid - 1;
+  }
+
+  return -1;
+}
+Yer Karmaşıklığı: 4n  16
+BİG-O Notasyonu: O(n)
+Zaman karmaşıklığı;
+BİG-O Notasyonu: O(n)
