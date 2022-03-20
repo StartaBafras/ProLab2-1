@@ -150,6 +150,15 @@ int find_variables(char text[][Size], variable_s *root, function_s *f_root)
                 for (int k = 0; k < strlen(name_temp); k++) // satırın içini gezer
 
                 {
+
+                    if ('=' == name_temp[k])
+                    {
+                        if (NULL == strstr(name_temp, ","))
+                        {
+                            break;
+                        }
+                    }
+
                     if ((')' == name_temp[k]) || (';' == name_temp[k])) // eğer bunlardan biri varsa isim almayı bırakır
                     {
                         break;
@@ -221,8 +230,8 @@ int find_variables(char text[][Size], variable_s *root, function_s *f_root)
                             token = strstr(var_name, "int");
                             memset(var_name_temp2, NULL, c_Size_l);
                             strncpy(var_name_temp2, var_name, (strlen(var_name)) - strlen(token));
-                            memset(var_name,NULL,c_Size_l);
-                            strcat(var_name,var_name_temp2);
+                            memset(var_name, NULL, c_Size_l);
+                            strcat(var_name, var_name_temp2);
                         }
 
                         find_same_line_var(var_name, var_line, var_kind, root);
