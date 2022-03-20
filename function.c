@@ -49,13 +49,13 @@ int add_loop_in_function(function_s *f_root, loop_s *l_root)
 {
     loop_s *iter = l_root;
     loop_s_pointer *l_p = f_root->loops_inside;
-    while(1)
+    while (1)
     {
         while (1)
         {
-            if(f_root->start_end_line[0] <= iter->start_end_line[0] && f_root->start_end_line[1] >= iter->start_end_line[1])
+            if (f_root->start_end_line[0] <= iter->start_end_line[0] && f_root->start_end_line[1] >= iter->start_end_line[1])
             {
-                if(f_root->loops_inside->loop == NULL)
+                if (f_root->loops_inside->loop == NULL)
                 {
                     f_root->loops_inside->loop = iter;
                 }
@@ -65,19 +65,20 @@ int add_loop_in_function(function_s *f_root, loop_s *l_root)
                     {
                         l_p = l_p->next;
                     }
-                    
+
                     loop_s_pointer *new = malloc(sizeof(loop_s_pointer));
                     new->loop = iter;
                     new->next = NULL;
                     l_p->next = new;
                 }
             }
-            if(iter->next == NULL) break;
+            if (iter->next == NULL)
+                break;
             iter = iter->next;
-            
         }
 
-        if(f_root->next == NULL) break;
+        if (f_root->next == NULL)
+            break;
         f_root = f_root->next;
     }
 }
@@ -108,6 +109,14 @@ loop_s *search_loop(int begin_line, loop_s *root)
     return NULL;
 }
 
+/**
+ * @brief  dosyanın içindeki stringi alır.
+ * değişken ve fonksiyonları bulur ve struct'a ekler.
+ * @param text string dizisi
+ *
+ *
+ *
+ */
 int find_variables(char text[][Size], variable_s *root, function_s *f_root)
 
 {
@@ -117,10 +126,11 @@ int find_variables(char text[][Size], variable_s *root, function_s *f_root)
     char *p_kind;                                                                                     // türün yerini belli eden p_kind
     char *p_name;                                                                                     // ismin yerini belli eder
     char name_temp[Size];                                                                             // isimi geçiçi olarak tutar
-    // char name_temp2[c_Size_l];                                                                        // ismi geçiçi olarak tutuar
-    char var_name[c_Size_l];       // ismi tutar
-    char var_kind[c_Size_l];       // türü tutar
-    int var_line = -1;             // türün satırını tutar
+    char var_name[c_Size_l];                                                                          // ismi tutar
+    char var_kind[c_Size_l];                                                                          // türü tutar
+    int var_line = -1;                                                                                // türün satırını tutar
+    char *token;
+    char var_name_temp2[c_Size_l];
     for (int i = 0; i < Size; i++) // satırları gezer
     {
         p_kind = text[i];
@@ -206,6 +216,15 @@ int find_variables(char text[][Size], variable_s *root, function_s *f_root)
 
                     if (NULL != strstr(var_name, ","))
                     {
+                        if (NULL != strstr(var_name, "int"))
+                        {
+                            token = strstr(var_name, "int");
+                            memset(var_name_temp2, NULL, c_Size_l);
+                            strncpy(var_name_temp2, var_name, (strlen(var_name)) - strlen(token));
+                            memset(var_name,NULL,c_Size_l);
+                            strcat(var_name,var_name_temp2);
+                        }
+
                         find_same_line_var(var_name, var_line, var_kind, root);
 
                         memset(var_name, NULL, c_Size_l);
@@ -232,11 +251,11 @@ int find_variables(char text[][Size], variable_s *root, function_s *f_root)
                     else
                     {
                         variable_s data; // struct'a eklenir
-                        memset(data.kind, NULL, strlen(data.kind));
+                        memset(data.kind, NULL, c_Size_l);
                         strcat(data.kind, var_kind);
                         data.line = var_line;
                         // data.id = 0;
-                        memset(data.name, NULL, strlen(data.name));
+                        memset(data.name, NULL, 10);
                         strcat(data.name, var_name);
                         memset(data.size, NULL, 20);
                         add_variable_data(&data, root);
