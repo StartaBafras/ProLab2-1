@@ -390,6 +390,7 @@ int find_loop_complexity(loop_s *l_root, int true)
         if (l_root->dependent_variable->variable == NULL)
         {
             lines_and_increase_arr[i][2] = 1;
+            //lines_and_increase_arr[i][2] = 3; //!!!
         }
         else
         {
