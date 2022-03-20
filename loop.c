@@ -190,7 +190,7 @@ int find_while(char text[][Size], loop_s *l_root)
             p_loop = strtok(p_loop, ">");
             p_loop = strtok(p_loop, "=");
             p_loop = strtok(p_loop, "!");
-            p_loop=strtok(p_loop," ");
+            p_loop = strtok(p_loop, " ");
             memset(loop_condition, NULL, c_Size_l);
             strcat(loop_condition, p_loop);
             if (line_loop_end == line_loop_start)
@@ -387,7 +387,15 @@ int find_loop_complexity(loop_s *l_root, int true)
 
         lines_and_increase_arr[i][0] = l_root->start_end_line[0];
         lines_and_increase_arr[i][1] = l_root->start_end_line[1];
-        lines_and_increase_arr[i][2] = l_root->dependent_variable->variable->increase_rate;
+        if (l_root->dependent_variable->variable == NULL)
+        {
+            lines_and_increase_arr[i][2] = 1;
+        }
+        else
+        {
+
+            lines_and_increase_arr[i][2] = l_root->dependent_variable->variable->increase_rate;
+        }
 
         if (l_root->next != NULL)
         {
@@ -480,7 +488,7 @@ int find_loop_complexity(loop_s *l_root, int true)
                 }
             }
         }
-        if ((complexity_arr[0][0]=='\0')&&(max_lenght_N==0)&&(max_lenght_logN==0))
+        if ((complexity_arr[0][0] == '\0') && (max_lenght_N == 0) && (max_lenght_logN == 0))
         {
             printf("1");
         }
