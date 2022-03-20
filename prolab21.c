@@ -11,6 +11,23 @@
 
 int main(void)
 {
+
+    int error = 0;
+    
+    error = move_and_compile();
+
+
+    if (0 != error)
+    {
+        printf("Kod Hatalı Derlenemedi.");
+        return 1;
+    }
+
+    printf("\n");
+
+    system("time ./input");
+
+
     variable_s *v_root = malloc(sizeof(variable_s));
     loop_s *l_root = malloc(sizeof(loop_s));
     function_s *f_root = malloc(sizeof(function_s));
@@ -63,7 +80,7 @@ int main(void)
         c = find_increase_case2(read_txt[i], strlen(read_txt[i]), i, v_root);
     }
 
-    int error = 0;
+    
 
     loop_s *variable_loop_connect = l_root;
 
@@ -82,9 +99,5 @@ int main(void)
     add_loop_in_function(f_root,l_root);
 
 
-    if (0 != error)
-    {
-        printf("Kod Hatalı Derlenemedi.");
-        return 1;
-    }
+    
 }
