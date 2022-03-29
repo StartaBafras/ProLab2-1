@@ -1,23 +1,28 @@
-#include <stdio.h>
-int main(){
-	int i;
-    int j;
-	int sum = 0;
-	int n=10;
-	int arr[n][n];
-	for (i=0;i<10;i++){
-		for (j=0;j<10;j++){
-		    arr[i][j]=i*j;
-			sum = sum + arr[i][j];
-		}
-	}
-	for (int i=0;i<10;i++)
-	{
+#include 
 
-	}
-        printf("%d", sum);	
-        return 0;
-        
+void selection(int array[],int size)
+{
+    int i,j,temp,min;
+   
+    for(i=0;i<size-1;i++)
+    {
+        min=i;
+        for(j=i+1;j<size;j++)
+        {       
+            if(array[j]<array[min])
+                min=j;
+        }   
+        temp=array[i];
+        array[i]=array[min];
+        array[min]=temp;
+    }
+   
+  
 }
- //zaman karmaşıklığı=O(n2)
- //yer karmaşıklığı=(4n2+16 O(n2))
+int main(int argc) {
+    int dizi[]={9,4,6,2,8,1};
+   
+    
+    selection(dizi,6);
+    
+}

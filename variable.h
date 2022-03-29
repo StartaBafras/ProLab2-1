@@ -16,11 +16,11 @@ typedef struct variable_s
 
 }variable_s;
 
-typedef struct veriable_s_pointer
+typedef struct variable_s_pointer
 {
     variable_s *variable; 
-    variable_s *next;
-}veriable_s_pointer;
+    struct variable_s_pointer *next;
+}variable_s_pointer;
 
 int write_variable_data(variable_s *data, variable_s *variable_p);
 
@@ -31,9 +31,8 @@ variable_s* search_variable(char *variable,int varibale_line ,variable_s *root);
 
 int find_same_line_var(char name_var[50], int var_line, char var_kind[c_Size_s], variable_s *root); // aynı satırdaki değişenleri bulur
 
-int find_variables(char text[][Size], variable_s *root); // değişken türünü ismini yerini bulur
 
-void find_size(variable_s *v_root);
+void find_size(variable_s *v_root,int start_line,int end_line);
 
 
 

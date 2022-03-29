@@ -14,9 +14,8 @@ typedef struct loop_s
     int id;
     int kind;
     int start_end_line[2];
-    veriable_s_pointer dependent_variable;
+    variable_s_pointer *dependent_variable;
     int complexity;
-    int id_var;
     char condition[10];
     struct loop_s *next;
 
@@ -25,7 +24,7 @@ typedef struct loop_s
 typedef struct loop_s_pointer
 {
     loop_s *loop; 
-    loop_s *next;
+    struct loop_s_pointer *next;
 }loop_s_pointer;
 
 
@@ -54,5 +53,8 @@ int research_variable_connect_loop_different_line(variable_s *v_root, loop_s *l_
 
 int find_line_end(int line_start, char text[][Size]); // iç içe for bulur
 
+int add_variable_in_loop(char *veriable, int variable_line, variable_s *v_root, loop_s *loop_struct);
+
+int  find_loop_complexity(loop_s *l_root,int true);
 
 #endif
