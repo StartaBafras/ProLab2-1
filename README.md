@@ -1,6 +1,36 @@
 # ProLab2-1
 ProLab 2-1
 
+# Özet
+
+Bu proje verilen bir C kodunun zaman
+karmaşıklığını ve hafıza karmaşıklığını bulabilmek için tasar-
+landı. Bunun için derleyicielrin çalışma prensibinden yarar-
+lanılarak sırasıyla değişkenler döngüler ve fonksiyonlar ayrı
+ayrı tespit edilip saklanarak hesaplamaların yapılabilinmesi
+sağlanmıştır. İşlemler çok karmaşık olabileceği için modüler
+programlama yaklaşımı benimsendi ve süreçler ayrı fonksiyonlar
+ile gerçekleştirilip farklı dosyalarda tutularak ölçeklendirilmeye
+çalışıldı.
+
+# Sonuç
+
+Yapılan çalışmalar sonucunda nispeten basit yazıma sahip
+olan kod parçacıklarının zaman ve yer karmaşıklığının hesa-
+planabildiği bir uygulama yapılmıştır. Dilin yazım standart-
+larının çok geniş olmasından ötürü her yazıma cevap veremese
+de ileriki geliştirmelerle bunları rahatça kapsayabilecek bir
+yapı inşa edilmiş ve doğruluğu test edilmiştir. Makefile kul-
+lanımı ile projenin modüler halde olması yönetimi oldukça
+kolaylaştırmış ve derleme işlemlerini de çok hızlandırmıştır.
+Genel çözüme giden yolda sadece C dilinin yazımını
+ayırmaktan ziyade assembly kodunun da göz önünde bulun-
+durularak 2. bir doğrulama yolu veya değişkenlerin artış mik-
+tarının daha kolay tespit edilebilmesi gibi konularda yardımcı 
+olacağını düşündüğümüzden daha ileri seviye çözümlerde ken-
+disine yer bulacağını öngörmekteyiz.
+
+
 # Kaynaklar
 
 ### Big O
