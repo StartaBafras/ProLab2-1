@@ -5,8 +5,8 @@ ProLab 2-1
 
 Bu proje verilen bir C kodunun zaman
 karmaşıklığını ve hafıza karmaşıklığını bulabilmek için tasar-
-landı. Bunun için derleyicielrin çalışma prensibinden yarar-
-lanılarak sırasıyla değişkenler döngüler ve fonksiyonlar ayrı
+landı. Bunun için derleyicielrin çalışma prensibinden yararlanılarak
+sırasıyla değişkenler döngüler ve fonksiyonlar ayrı
 ayrı tespit edilip saklanarak hesaplamaların yapılabilinmesi
 sağlanmıştır. İşlemler çok karmaşık olabileceği için modüler
 programlama yaklaşımı benimsendi ve süreçler ayrı fonksiyonlar
